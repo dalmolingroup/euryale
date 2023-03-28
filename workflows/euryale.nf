@@ -9,9 +9,8 @@ def summary_params = NfcoreSchema.paramsSummaryMap(workflow, params)
 // Validate input parameters
 WorkflowEuryale.initialise(params, log)
 
-// TODO nf-core: Add all file path parameters for the pipeline to the list below
 // Check input path parameters to see if they exist
-def checkPathParamList = [ params.input, params.multiqc_config, params.fasta ]
+def checkPathParamList = [ params.input, params.multiqc_config, params.kaiju_db ]
 for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 
 // Check mandatory parameters
@@ -38,6 +37,7 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK } from '../subworkflows/local/input_check'
+include { TAXONOMY } from '../subworkflows/local/taxonomy'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,6 +64,7 @@ def multiqc_report = []
 workflow EURYALE {
 
     ch_versions = Channel.empty()
+    ch_kaiju_db = Channel.of([ [id: "kaiju_db"], file(params.kaiju_db)])
 
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
@@ -72,14 +73,21 @@ workflow EURYALE {
         ch_input
     )
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
-
+    INPUT_CHECK.out.reads.set { reads }
     //
     // MODULE: Run FastQC
     //
     FASTQC (
-        INPUT_CHECK.out.reads
+        reads
     )
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+
+    TAXONOMY (
+        reads,
+        ch_kaiju_db
+    )
+    ch_versions = ch_versions.mix(TAXONOMY.out.versions)
+
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
