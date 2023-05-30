@@ -1,5 +1,6 @@
 include { UNTAR } from '../../modules/nf-core/untar/main'
 include { KAIJU_KAIJU } from '../../modules/nf-core/kaiju/kaiju/main'
+include { KAIJU_KAIJU2TABLE } from '../../modules/nf-core/kaiju/kaiju2table/main'
 include { KAIJU_KAIJU2KRONA } from '../../modules/nf-core/kaiju/kaiju2krona/main'
 include { KRONA_KTIMPORTTEXT } from '../../modules/nf-core/krona/ktimporttext/main'
 
@@ -22,6 +23,14 @@ workflow TAXONOMY {
 
     KAIJU_KAIJU.out.results.set { kaiju_out }
 
+    KAIJU_KAIJU2TABLE (
+        kaiju_out,
+        kaiju_db_files,
+        "species"
+    )
+
+    KAIJU_KAIJU2TABLE.out.summary.set { kaiju_report }
+
     KAIJU_KAIJU2KRONA (kaiju_out, kaiju_db_files)
     ch_versions = ch_versions.mix(KAIJU_KAIJU2KRONA.out.versions)
 
@@ -31,7 +40,7 @@ workflow TAXONOMY {
     KRONA_KTIMPORTTEXT.out.html.set { krona_report }
 
     emit:
-    kaiju_out = kaiju_out
+    kaiju_report = kaiju_report
     krona_report = krona_report
     versions = ch_versions
 }
