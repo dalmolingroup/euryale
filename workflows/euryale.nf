@@ -84,10 +84,12 @@ workflow EURYALE {
     PREPROCESS.out.merged_reads
         .set { merged_reads }
 
-    ASSEMBLY (
-        reads
-    )
-    ch_versions = ch_versions.mix(ASSEMBLY.out.versions)
+    if (params.assembly_based) {
+        ASSEMBLY (
+            reads
+        )
+        ch_versions = ch_versions.mix(ASSEMBLY.out.versions)
+    }
 
     TAXONOMY (
         merged_reads,
