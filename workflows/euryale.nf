@@ -39,6 +39,7 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 include { INPUT_CHECK } from '../subworkflows/local/input_check'
 include { PREPROCESS } from '../subworkflows/local/preprocess'
 include { TAXONOMY } from '../subworkflows/local/taxonomy'
+include { ASSEMBLY } from '../subworkflows/local/assembly'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,9 +79,17 @@ workflow EURYALE {
     PREPROCESS (
         reads
     )
+    ch_versions = ch_versions.mix(PREPROCESS.out.versions)
 
     PREPROCESS.out.merged_reads
         .set { merged_reads }
+
+    if (params.assembly_based) {
+        ASSEMBLY (
+            reads
+        )
+        ch_versions = ch_versions.mix(ASSEMBLY.out.versions)
+    }
 
     TAXONOMY (
         merged_reads,

@@ -42,15 +42,15 @@
                 }
             }
         },
-        "new_group_1": {
-            "title": "New Group 1",
+        "taxonomy": {
+            "title": "Taxonomy",
             "type": "object",
             "description": "",
             "default": "",
             "properties": {
                 "kaiju_db": {
                     "type": "string",
-                    "default": null,
+                    "default": "None",
                     "fa_icon": "fas fa-database"
                 }
             },
@@ -239,7 +239,7 @@
             "$ref": "#/definitions/input_output_options"
         },
         {
-            "$ref": "#/definitions/new_group_1"
+            "$ref": "#/definitions/taxonomy"
         },
         {
             "$ref": "#/definitions/reference_genome_options"
@@ -250,5 +250,10 @@
         {
             "$ref": "#/definitions/generic_options"
         }
-    ]
+    ],
+    "properties": {
+        "assembly_based": {
+            "type": "boolean"
+        }
+    }
 }
