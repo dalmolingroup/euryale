@@ -1,0 +1,14 @@
+Changes in module 'nf-core/fastp'
+--- modules/nf-core/fastp/main.nf
++++ modules/nf-core/fastp/main.nf
+@@ -5,7 +5,7 @@
+     conda "bioconda::fastp=0.23.3"
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+         'https://depot.galaxyproject.org/singularity/fastp:0.23.3--h5f740d0_0' :
+-        'biocontainers/fastp:0.23.3--h5f740d0_0' }"
++        'quay.io/biocontainers/fastp:0.23.3--h5f740d0_0' }"
+ 
+     input:
+     tuple val(meta), path(reads)
+
+************************************************************
