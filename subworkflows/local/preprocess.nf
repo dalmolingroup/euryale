@@ -40,6 +40,7 @@ workflow PREPROCESS {
 
     emit:
     multiqc_files = ch_multiqc_files
+    reads = FASTP.out.reads
     merged_reads = merged_reads
     versions = ch_versions
 }
