@@ -36,6 +36,7 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 //
 // MODULES
 //
+include { FASTX_COLLAPSER } from '../modules/local/fastx_toolkit/collapser'
 
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
@@ -55,6 +56,7 @@ include { ASSEMBLY } from '../subworkflows/local/assembly'
 //
 // MODULE: Installed directly from nf-core/modules
 //
+include { GUNZIP } from '../modules/nf-core/gunzip/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 
@@ -105,6 +107,17 @@ workflow EURYALE {
         )
         ch_versions = ch_versions.mix(ASSEMBLY.out.versions)
     }
+
+    GUNZIP (
+        clean_reads
+    )
+
+    GUNZIP.out.gunzip
+        .set { decompressed_reads }
+
+    FASTX_COLLAPSER (
+        decompressed_reads
+    )
 
     TAXONOMY (
         clean_reads,
