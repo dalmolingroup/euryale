@@ -34,6 +34,11 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 */
 
 //
+// MODULES
+//
+include { FASTX_COLLAPSER } from '../modules/local/fastx_toolkit/collapser'
+
+//
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK } from '../subworkflows/local/input_check'
@@ -51,6 +56,7 @@ include { ASSEMBLY } from '../subworkflows/local/assembly'
 //
 // MODULE: Installed directly from nf-core/modules
 //
+include { GUNZIP } from '../modules/nf-core/gunzip/main'
 include { MULTIQC                     } from '../modules/nf-core/multiqc/main'
 include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 
@@ -67,7 +73,7 @@ workflow EURYALE {
 
     ch_versions = Channel.empty()
     ch_kaiju_db = Channel.value([ [id: "kaiju_db"], file(params.kaiju_db)])
-    ch_host_reference = Channel.value([ [id: "host_reference"], file(params.host_fasta)])
+    ch_host_reference = params.host_fasta ? Channel.value([ [id: "host_reference"], file(params.host_fasta)]) : false
 
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
@@ -84,13 +90,17 @@ workflow EURYALE {
     ch_versions = ch_versions.mix(PREPROCESS.out.versions)
 
     PREPROCESS.out.merged_reads
-        .set { merged_reads }
+        .set { clean_reads }
 
-    HOST_REMOVAL (
-        merged_reads,
-        ch_host_reference
-    )
+    if (ch_host_reference) {
+        HOST_REMOVAL (
+            clean_reads,
+            ch_host_reference
+        )
 
+        HOST_REMOVAL.out.unaligned_reads
+            .set { clean_reads }
+    }
     if (params.assembly_based) {
         ASSEMBLY (
             reads
@@ -98,8 +108,19 @@ workflow EURYALE {
         ch_versions = ch_versions.mix(ASSEMBLY.out.versions)
     }
 
+    GUNZIP (
+        clean_reads
+    )
+
+    GUNZIP.out.gunzip
+        .set { decompressed_reads }
+
+    FASTX_COLLAPSER (
+        decompressed_reads
+    )
+
     TAXONOMY (
-        HOST_REMOVAL.out.unaligned_reads,
+        clean_reads,
         ch_kaiju_db
     )
     ch_versions = ch_versions.mix(TAXONOMY.out.versions)
