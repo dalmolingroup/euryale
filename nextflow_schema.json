@@ -42,6 +42,20 @@
                 }
             }
         },
+        "decontamination": {
+            "title": "Decontamination",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "fa_icon": "fas fa-hand-sparkles",
+            "properties": {
+                "host_fasta": {
+                    "type": "string",
+                    "default": null,
+                    "fa_icon": "fas fa-align-justify"
+                }
+            }
+        },
         "taxonomy": {
             "title": "Taxonomy",
             "type": "object",
@@ -56,6 +70,19 @@
             },
             "required": ["kaiju_db"],
             "fa_icon": "fab fa-pagelines"
+        },
+        "assembly": {
+            "title": "Assembly",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "assembly_based": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-check"
+                }
+            },
+            "fa_icon": "fas fa-align-justify"
         },
         "reference_genome_options": {
             "title": "Reference genome options",
@@ -239,7 +266,13 @@
             "$ref": "#/definitions/input_output_options"
         },
         {
+            "$ref": "#/definitions/decontamination"
+        },
+        {
             "$ref": "#/definitions/taxonomy"
+        },
+        {
+            "$ref": "#/definitions/assembly"
         },
         {
             "$ref": "#/definitions/reference_genome_options"
@@ -250,10 +283,5 @@
         {
             "$ref": "#/definitions/generic_options"
         }
-    ],
-    "properties": {
-        "assembly_based": {
-            "type": "boolean"
-        }
-    }
+    ]
 }
