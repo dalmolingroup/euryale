@@ -34,6 +34,10 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 */
 
 //
+// MODULES
+//
+
+//
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK } from '../subworkflows/local/input_check'
@@ -67,7 +71,7 @@ workflow EURYALE {
 
     ch_versions = Channel.empty()
     ch_kaiju_db = Channel.value([ [id: "kaiju_db"], file(params.kaiju_db)])
-    ch_host_reference = Channel.value([ [id: "host_reference"], file(params.host_fasta)])
+    ch_host_reference = params.host_fasta ? Channel.value([ [id: "host_reference"], file(params.host_fasta)]) : false
 
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
@@ -84,13 +88,17 @@ workflow EURYALE {
     ch_versions = ch_versions.mix(PREPROCESS.out.versions)
 
     PREPROCESS.out.merged_reads
-        .set { merged_reads }
+        .set { clean_reads }
 
-    HOST_REMOVAL (
-        merged_reads,
-        ch_host_reference
-    )
+    if (ch_host_reference) {
+        HOST_REMOVAL (
+            clean_reads,
+            ch_host_reference
+        )
 
+        HOST_REMOVAL.out.unaligned_reads
+            .set { clean_reads }
+    }
     if (params.assembly_based) {
         ASSEMBLY (
             reads
@@ -99,7 +107,7 @@ workflow EURYALE {
     }
 
     TAXONOMY (
-        HOST_REMOVAL.out.unaligned_reads,
+        clean_reads,
         ch_kaiju_db
     )
     ch_versions = ch_versions.mix(TAXONOMY.out.versions)
