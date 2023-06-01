@@ -22,6 +22,18 @@
                         "git_sha": "c8e35eb2055c099720a75538d1b8adb3fb5a464c",
                         "installed_by": ["modules"]
                     },
+                    "diamond/blastx": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/diamond/blastx/diamond-blastx.diff"
+                    },
+                    "diamond/makedb": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/diamond/makedb/diamond-makedb.diff"
+                    },
                     "fastp": {
                         "branch": "master",
                         "git_sha": "37a98dd100d74d9188a272197663587de1331a0e",

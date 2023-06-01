@@ -46,6 +46,7 @@ include { PREPROCESS } from '../subworkflows/local/preprocess'
 include { HOST_REMOVAL } from '../subworkflows/local/host_removal'
 include { TAXONOMY } from '../subworkflows/local/taxonomy'
 include { ASSEMBLY } from '../subworkflows/local/assembly'
+include { ALIGNMENT } from '../subworkflows/local/alignment'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,6 +74,7 @@ workflow EURYALE {
 
     ch_versions = Channel.empty()
     ch_kaiju_db = Channel.value([ [id: "kaiju_db"], file(params.kaiju_db)])
+    ch_reference_fasta = file(params.reference_fasta)
     ch_host_reference = params.host_fasta ? Channel.value([ [id: "host_reference"], file(params.host_fasta)]) : false
 
     //
@@ -118,6 +120,12 @@ workflow EURYALE {
     FASTX_COLLAPSER (
         decompressed_reads
     )
+
+    ALIGNMENT (
+        FASTX_COLLAPSER.out.collapsed,
+        ch_reference_fasta
+    )
+    ch_versions = ch_versions.mix(ALIGNMENT.out.versions)
 
     TAXONOMY (
         clean_reads,
