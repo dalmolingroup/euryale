@@ -46,6 +46,7 @@ include { PREPROCESS } from '../subworkflows/local/preprocess'
 include { HOST_REMOVAL } from '../subworkflows/local/host_removal'
 include { TAXONOMY } from '../subworkflows/local/taxonomy'
 include { ASSEMBLY } from '../subworkflows/local/assembly'
+include { ALIGNMENT } from '../subworkflows/local/alignment'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,6 +74,7 @@ workflow EURYALE {
 
     ch_versions = Channel.empty()
     ch_kaiju_db = Channel.value([ [id: "kaiju_db"], file(params.kaiju_db)])
+    ch_reference_fasta = file(params.reference_fasta)
     ch_host_reference = params.host_fasta ? Channel.value([ [id: "host_reference"], file(params.host_fasta)]) : false
 
     //
@@ -119,6 +121,12 @@ workflow EURYALE {
         decompressed_reads
     )
 
+    ALIGNMENT (
+        FASTX_COLLAPSER.out.collapsed,
+        ch_reference_fasta
+    )
+    ch_versions = ch_versions.mix(ALIGNMENT.out.versions)
+
     TAXONOMY (
         clean_reads,
         ch_kaiju_db
@@ -145,6 +153,7 @@ workflow EURYALE {
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
     ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
     ch_multiqc_files = ch_multiqc_files.mix(TAXONOMY.out.kaiju_report.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.multiqc_files.collect())
 
     MULTIQC (
         ch_multiqc_files.collect(),
