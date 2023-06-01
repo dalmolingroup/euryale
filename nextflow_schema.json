@@ -51,10 +51,23 @@
             "properties": {
                 "host_fasta": {
                     "type": "string",
-                    "default": null,
+                    "default": "None",
                     "fa_icon": "fas fa-align-justify"
                 }
             }
+        },
+        "alignment": {
+            "title": "Alignment",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "reference_fasta": {
+                    "type": "string",
+                    "default": null
+                }
+            },
+            "fa_icon": "fas fa-align-center"
         },
         "taxonomy": {
             "title": "Taxonomy",
@@ -267,6 +280,9 @@
         },
         {
             "$ref": "#/definitions/decontamination"
+        },
+        {
+            "$ref": "#/definitions/alignment"
         },
         {
             "$ref": "#/definitions/taxonomy"
