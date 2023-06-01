@@ -9,6 +9,7 @@ workflow ALIGNMENT {
     main:
 
     ch_versions = Channel.empty()
+    ch_multiqc_files = Channel.empty()
 
     DIAMOND_MAKEDB (
         reference_fasta
@@ -22,8 +23,10 @@ workflow ALIGNMENT {
         "txt",
         blast_columns
     )
+    ch_multiqc_files = ch_multiqc_files.mix(DIAMOND_BLASTX.out.log.collect{it[1]}.ifEmpty([]))
 
     emit:
     alignments = DIAMOND_BLASTX.out.txt
+    multiqc_files = ch_multiqc_files
     versions = ch_versions
 }

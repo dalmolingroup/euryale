@@ -153,6 +153,7 @@ workflow EURYALE {
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
     ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
     ch_multiqc_files = ch_multiqc_files.mix(TAXONOMY.out.kaiju_report.collect{it[1]}.ifEmpty([]))
+    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.multiqc_files.collect())
 
     MULTIQC (
         ch_multiqc_files.collect(),
