@@ -64,6 +64,10 @@
             "properties": {
                 "reference_fasta": {
                     "type": "string",
+                    "default": "None"
+                },
+                "diamond_db": {
+                    "type": "string",
                     "default": null
                 }
             },
