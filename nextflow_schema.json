@@ -68,7 +68,7 @@
                 },
                 "diamond_db": {
                     "type": "string",
-                    "default": null
+                    "default": "None"
                 }
             },
             "fa_icon": "fas fa-align-center"
@@ -87,6 +87,20 @@
             },
             "required": ["kaiju_db"],
             "fa_icon": "fab fa-pagelines"
+        },
+        "functional": {
+            "title": "Functional",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "id_mapping": {
+                    "type": "string",
+                    "default": null
+                }
+            },
+            "required": ["id_mapping"],
+            "fa_icon": "fas fa-gavel"
         },
         "assembly": {
             "title": "Assembly",
@@ -290,6 +304,9 @@
         },
         {
             "$ref": "#/definitions/taxonomy"
+        },
+        {
+            "$ref": "#/definitions/functional"
         },
         {
             "$ref": "#/definitions/assembly"
