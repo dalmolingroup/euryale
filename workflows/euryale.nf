@@ -47,6 +47,7 @@ include { HOST_REMOVAL } from '../subworkflows/local/host_removal'
 include { TAXONOMY } from '../subworkflows/local/taxonomy'
 include { ASSEMBLY } from '../subworkflows/local/assembly'
 include { ALIGNMENT } from '../subworkflows/local/alignment'
+include { FUNCTIONAL } from '../subworkflows/local/functional'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,6 +78,7 @@ workflow EURYALE {
     ch_kaiju_db = Channel.value([ [id: "kaiju_db"], file(params.kaiju_db)])
     ch_reference_fasta = params.reference_fasta ? file(params.reference_fasta) : []
     ch_diamond_db = params.diamond_db ? file(params.diamond_db) : []
+    ch_id_mapping = params.id_mapping ? file(params.id_mapping) : []
     ch_host_reference = params.host_fasta ? Channel.value([ [id: "host_reference"], file(params.host_fasta)]) : false
 
     //
@@ -135,6 +137,10 @@ workflow EURYALE {
         ch_kaiju_db
     )
     ch_versions = ch_versions.mix(TAXONOMY.out.versions)
+
+    FUNCTIONAL (
+        ch_id_mapping
+    )
 
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
