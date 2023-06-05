@@ -71,10 +71,12 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoft
 def multiqc_report = []
 
 workflow EURYALE {
+    if (params.reference_fasta == null && params.diamond_db == null) { exit 1, 'A reference fasta (--reference_fasta) or a DIAMOND db (--diamond_db) must be specified' }
 
     ch_versions = Channel.empty()
     ch_kaiju_db = Channel.value([ [id: "kaiju_db"], file(params.kaiju_db)])
-    ch_reference_fasta = file(params.reference_fasta)
+    ch_reference_fasta = params.reference_fasta ? file(params.reference_fasta) : []
+    ch_diamond_db = params.diamond_db ? file(params.diamond_db) : []
     ch_host_reference = params.host_fasta ? Channel.value([ [id: "host_reference"], file(params.host_fasta)]) : false
 
     //
@@ -123,7 +125,8 @@ workflow EURYALE {
 
     ALIGNMENT (
         FASTX_COLLAPSER.out.collapsed,
-        ch_reference_fasta
+        ch_reference_fasta,
+        ch_diamond_db
     )
     ch_versions = ch_versions.mix(ALIGNMENT.out.versions)
 
