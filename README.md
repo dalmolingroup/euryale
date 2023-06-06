@@ -1,21 +1,32 @@
 ## Introduction
 
-<!-- TODO nf-core: Write a 1-2 sentence summary of what data the pipeline is for and what it does -->
-
 **dalmolingroup/euryale** is a pipeline for taxonomic classification and functional annotation of metagenomic reads. Based on [MEDUSA](https://github.com/dalmolingroup/medusa).
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from [nf-core/modules](https://github.com/nf-core/modules) in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!
 
-<!-- TODO nf-core: Add full-sized test dataset and amend the paragraph below if applicable -->
-
-On release, automated continuous integration tests run the pipeline on a full-sized dataset on the AWS cloud infrastructure. This ensures that the pipeline runs on AWS, has sensible resource allocation defaults set to run on real-world datasets, and permits the persistent storage of results to benchmark between pipeline releases and other analysis sources.
-
 ## Pipeline summary
 
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
+### Pre-processing
 
-1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
-2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+- Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
+- Read trimming and merging ([`fastp`](https://github.com/OpenGene/fastp))
+- (_optionally_) Host read removal ([`BowTie2`](https://bowtie-bio.sourceforge.net/bowtie2/manual.shtml))
+- Duplicated sequence removal ([`fastx collapser`](http://hannonlab.cshl.edu/fastx_toolkit/))
+- Present QC and other data ([`MultiQC`](http://multiqc.info/))
+
+### Assembly
+
+- (_optionally_) Read assembly ([`MEGAHIT`](https://github.com/voutcn/megahit))
+
+### Taxonomic classification
+
+- Sequence classification ([`Kaiju`](https://github.com/bioinformatics-centre/kaiju/))
+- Visualization ([`Krona`](https://github.com/marbl/Krona/wiki))
+
+### Functional annotation
+
+- Sequence alignment ([`DIAMOND`](https://github.com/bbuchfink/diamond))
+- Map alignment matches to functional database ([`annotate`](https://github.com/dalmolingroup/annotate))
 
 ## Quick Start
 
@@ -38,10 +49,8 @@ On release, automated continuous integration tests run the pipeline on a full-si
 
 4. Start running your own analysis!
 
-   <!-- TODO nf-core: Update the example "typical command" below used to run the pipeline -->
-
    ```bash
-   nextflow run dalmolingroup/euryale --input samplesheet.csv --outdir <OUTDIR> --genome GRCh37 -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+   nextflow run dalmolingroup/euryale --input samplesheet.csv --outdir <OUTDIR> --kaiju_db kaiju_reference --diamond_db diamond_db --reference_fasta diamond_fasta --host_fasta host_reference_fasta --id_mapping id_mapping_file -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
    ```
 
 ## Credits
@@ -50,7 +59,7 @@ dalmolingroup/euryale was originally written by João Cavalcante.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+- Diego Morais (for developing the original [MEDUSA](https://github.com/dalmolingroup/medusa) pipeline)
 
 ## Contributions and Support
 
@@ -58,12 +67,10 @@ If you would like to contribute to this pipeline, please see the [contributing g
 
 ## Citations
 
-<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use  dalmolingroup/euryale for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
-
-<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
-
-An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
+> Morais DAA, Cavalcante JVF, Monteiro SS, Pasquali MAB and Dalmolin RJS (2022)
+> MEDUSA: A Pipeline for Sensitive Taxonomic Classification and Flexible Functional Annotation
+> of Metagenomic Shotgun Sequences.
+> Front. Genet. 13:814437. doi: 10.3389/fgene.2022.814437
 
 This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).
 
