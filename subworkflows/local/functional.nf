@@ -1,5 +1,6 @@
 include { GUNZIP } from '../../modules/nf-core/gunzip/main'
 include { CREATE_DICTIONARY } from '../../modules/local/create_dictionary'
+include { CREATE_DB } from '../../modules/local/annotate/createdb'
 
 workflow FUNCTIONAL {
     take:
@@ -17,6 +18,10 @@ workflow FUNCTIONAL {
 
     CREATE_DICTIONARY (
         decompressed_mapping
+    )
+
+    CREATE_DB (
+        CREATE_DICTIONARY.out.dictionary
     )
 
     emit:
