@@ -139,6 +139,7 @@ workflow EURYALE {
     ch_versions = ch_versions.mix(TAXONOMY.out.versions)
 
     FUNCTIONAL (
+        ALIGNMENT.out.alignments,
         ch_id_mapping
     )
 
