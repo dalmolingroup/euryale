@@ -95,8 +95,13 @@ workflow EURYALE {
     )
     ch_versions = ch_versions.mix(PREPROCESS.out.versions)
 
-    PREPROCESS.out.merged_reads
-        .set { clean_reads }
+    if (ch_host_reference) {
+        PREPROCESS.out.reads
+            .set { clean_reads }
+    } else {
+        PREPROCESS.out.merged_reads
+            .set { clean_reads }
+    }
 
     if (ch_host_reference) {
         HOST_REMOVAL (
