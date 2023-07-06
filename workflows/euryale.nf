@@ -116,22 +116,31 @@ workflow EURYALE {
         ASSEMBLY (
             reads
         )
+
+        ASSEMBLY.out.contigs
+            .map { meta, path -> tuple([id: meta.id, single_end: true], path) }
+            .set { clean_reads }
+
         ch_versions = ch_versions.mix(ASSEMBLY.out.versions)
     }
 
-    GUNZIP (
-        clean_reads
-    )
+    if (!params.assembly_based) {
+        GUNZIP (
+            clean_reads
+        )
 
-    GUNZIP.out.gunzip
-        .set { decompressed_reads }
+        GUNZIP.out.gunzip
+            .set { decompressed_reads }
 
-    FASTX_COLLAPSER (
-        decompressed_reads
-    )
+        FASTX_COLLAPSER (
+            decompressed_reads
+        )
+
+        FASTX_COLLAPSER.out.collapsed.set { clean_reads }
+    }
 
     ALIGNMENT (
-        FASTX_COLLAPSER.out.collapsed,
+        clean_reads,
         ch_reference_fasta,
         ch_diamond_db
     )
