@@ -9,6 +9,10 @@ process ANNOTATE {
     input:
     tuple val(meta), path(alignment)
     path(annotate_db)
+    val minimum_pident
+    val minimum_alen
+    val minimum_bitscore
+    val maximum_evalue
 
     output:
     tuple val(meta), path("*annotated.txt"), emit: annotated
@@ -25,6 +29,13 @@ process ANNOTATE {
         ${prefix}_annotated.txt \\
         NR2GO \\
         -l 1 \\
+        --bitscore $minimum_bitscore \\
+        --identity $minimum_pident \\
+        --alen $minimum_alen \\
+        --evalue $maximum_evalue \\
+        --alenCol 5 \\
+        --bitscoreCol 13 \\
+        --evalueCol 12 \\
         -d $annotate_db
     """
 }
