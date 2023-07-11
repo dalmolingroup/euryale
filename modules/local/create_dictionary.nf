@@ -1,5 +1,6 @@
 process CREATE_DICTIONARY {
     label 'process_medium'
+    label 'process_high_memory'
 
     conda "arthurvinx::medusaPipeline"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

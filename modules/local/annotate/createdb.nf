@@ -1,5 +1,5 @@
 process CREATE_DB {
-    label 'process_medium'
+    label 'process_high'
 
     conda "arthurvinx::medusaPipeline"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
