@@ -64,11 +64,15 @@
             "properties": {
                 "reference_fasta": {
                     "type": "string",
-                    "default": "None"
+                    "default": "None",
+                    "description": "Path to FASTA genome file.",
+                    "fa_icon": "fas fa-align-justify"
                 },
                 "diamond_db": {
                     "type": "string",
-                    "default": "None"
+                    "default": "None",
+                    "description": "Path to pre-built DIAMOND db.",
+                    "fa_icon": "fas fa-database"
                 }
             },
             "fa_icon": "fas fa-align-center"
@@ -96,7 +100,28 @@
             "properties": {
                 "id_mapping": {
                     "type": "string",
-                    "default": null
+                    "default": "None",
+                    "description": "Path to ID mapping file to be used for the Functional annotation"
+                },
+                "minimum_bitscore": {
+                    "type": "integer",
+                    "default": 50,
+                    "description": "Minimum bitscore of a match to be used for annotation"
+                },
+                "minimum_pident": {
+                    "type": "integer",
+                    "default": 80,
+                    "description": "Minimum identity of a match to be used for annotation"
+                },
+                "minimum_alen": {
+                    "type": "integer",
+                    "default": 50,
+                    "description": "Minimum alignment length of a match to be used for annotation"
+                },
+                "maximum_evalue": {
+                    "type": "number",
+                    "default": 0.0001,
+                    "description": "Maximum evalue of a match to be used for annotation"
                 }
             },
             "required": ["id_mapping"],
@@ -127,15 +152,6 @@
                     "fa_icon": "fas fa-book",
                     "help_text": "If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. \n\nSee the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details."
                 },
-                "fasta": {
-                    "type": "string",
-                    "format": "file-path",
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
-                    "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
-                    "fa_icon": "far fa-file-code"
-                },
                 "igenomes_base": {
                     "type": "string",
                     "format": "directory-path",
@@ -150,6 +166,10 @@
                     "fa_icon": "fas fa-ban",
                     "hidden": true,
                     "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
+                },
+                "fasta": {
+                    "type": "string",
+                    "default": null
                 }
             }
         },

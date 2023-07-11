@@ -28,7 +28,11 @@ workflow FUNCTIONAL {
 
     ANNOTATE (
         alignments,
-        CREATE_DB.out.db
+        CREATE_DB.out.db,
+        params.minimum_bitscore,
+        params.minimum_pident,
+        params.minimum_alen,
+        params.maximum_evalue
     )
 
     emit:
