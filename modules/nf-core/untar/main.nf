@@ -1,6 +1,6 @@
 process UNTAR {
     tag "$archive"
-    label 'process_single'
+    label 'process_high'
 
     conda "conda-forge::sed=4.7 bioconda::grep=3.4 conda-forge::tar=1.34"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
