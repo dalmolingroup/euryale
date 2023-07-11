@@ -1,6 +1,6 @@
 process DIAMOND_MAKEDB {
     tag "$fasta"
-    label 'process_medium'
+    label 'process_high'
 
     conda "bioconda::diamond=2.0.15"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
