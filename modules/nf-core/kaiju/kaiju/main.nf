@@ -1,6 +1,7 @@
 process KAIJU_KAIJU {
     tag "$meta.id"
     label 'process_high'
+    label 'process_long'
     label 'process_high_memory'
 
     conda "bioconda::kaiju=1.8.2"
