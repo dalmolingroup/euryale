@@ -1,7 +1,14 @@
 Changes in module 'nf-core/diamond/blastx'
 --- modules/nf-core/diamond/blastx/main.nf
 +++ modules/nf-core/diamond/blastx/main.nf
-@@ -5,7 +5,7 @@
+@@ -1,11 +1,13 @@
+ process DIAMOND_BLASTX {
+     tag "$meta.id"
+-    label 'process_medium'
++    label 'process_high'
++    label 'process_long'
++    label 'process_high_memory'
+ 
      conda "bioconda::diamond=2.0.15"
      container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
          'https://depot.galaxyproject.org/singularity/diamond:2.0.15--hb97b32f_0' :

@@ -2,6 +2,7 @@ process DIAMOND_BLASTX {
     tag "$meta.id"
     label 'process_high'
     label 'process_long'
+    label 'process_high_memory'
 
     conda "bioconda::diamond=2.0.15"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
