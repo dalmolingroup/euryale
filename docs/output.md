@@ -10,32 +10,93 @@ The directories listed below will be created in the results directory after the 
 
 ## Pipeline overview
 
-The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
+The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps (steps in **italics** don't run by default):
 
-- [FastQC](#fastqc) - Raw read QC
+- [Kaiju](#kaiju) - Taxonomically classify reads or contigs
+- [Krona](#krona) - Visualize the taxonomic classification for each sample.
+- [Diamond](#diamond) - Alignment reads and contigs against a reference database (such as NCBI-nr).
+- [Annotate](#annotate) - Functional annotation of alignment matches.
+- [MEGAHIT](#megahit) - Assembled contigs.
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
-### FastQC
+### Kaiju
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `fastqc/`
-  - `*_fastqc.html`: FastQC report containing quality metrics.
-  - `*_fastqc.zip`: Zip archive containing the FastQC report, tab-delimited data file and plot images.
+- `taxonomy/`
+  - `${sample}.tsv`: Kaiju classification output.
+  - `${sample}.txt`: Kaiju2Table TSV output.
 
 </details>
 
-[FastQC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/) gives general quality metrics about your sequenced reads. It provides information about the quality score distribution across your reads, per base sequence content (%A/T/G/C), adapter contamination and overrepresented sequences. For further reading and documentation see the [FastQC help pages](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/).
+[Kaiju](https://github.com/bioinformatics-centre/kaiju/) is a
+software to perform fast taxonomic classification of metagenomic sequencing reads using a protein reference database.
 
-![MultiQC - FastQC sequence counts plot](images/mqc_fastqc_counts.png)
+### Krona
 
-![MultiQC - FastQC mean quality scores plot](images/mqc_fastqc_quality.png)
+<details markdown="1">
+<summary>Output files</summary>
 
-![MultiQC - FastQC adapter content plot](images/mqc_fastqc_adapter.png)
+- `taxonomy/`
+  - `${sample}.html`: Krona visualization for the sample.
 
-> **NB:** The FastQC plots displayed in the MultiQC report shows _untrimmed_ reads. They may contain adapter sequence and potentially regions with low quality.
+</details>
+
+- [Krona](https://github.com/marbl/Krona/) is a tool to interactively explore metagenomes and more from a web browser.
+
+### Diamond
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `alignment/${sample}/`
+  - `${sample}.txt`: Alignment matches in blast tabular output format.
+  - `${sample}.log`: DIAMOND execution log.
+
+</details>
+
+- [DIAMOND](https://github.com/bbuchfink/diamond) is an accelerated BLAST compatible local sequence aligner.
+
+### Annotate
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `functional/${sample}/`
+  - `${sample}_annotated.txt`: Alignment matches annotated to chosen
+    functional database (e.g. GO).
+
+</details>
+
+- [Annotate](https://github.com/dalmolingroup/annotate) is a tool to annotate each query using the best alignment for which a mapping is known.
+
+### MEGAHIT
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `assembly/${sample}/`
+  - `${sample}.contigs.fa.gz`: Contigs assembled for the sample.
+
+</details>
+
+- [MEGAHIT](https://github.com/voutcn/megahit) is an ultra-fast and memory-efficient (meta-)genome assembler
+
+## _DIAMOND database_
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `diamond_db/`
+  - `${database_name}.dmnd`: DIAMOND database for the reference fasta file.
+
+</details>
+
+- This output is present if you add the `--save_db` parameter.
+
+- [DIAMOND](https://github.com/bbuchfink/diamond) is an accelerated BLAST compatible local sequence aligner.
 
 ### MultiQC
 
