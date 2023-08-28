@@ -36,22 +36,42 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 3. Download the pipeline and test it on a minimal dataset with a single command:
 
-   ```bash
-   nextflow run dalmolingroup/euryale -profile test,YOURPROFILE --outdir <OUTDIR>
-   ```
+```bash
+nextflow run dalmolingroup/euryale -profile test,YOURPROFILE --outdir <OUTDIR>
+```
 
-   Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
+Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (`YOURPROFILE` in the example command above). You can chain multiple config profiles in a comma-separated string.
 
-   > - The pipeline comes with config profiles called `docker`, `singularity`, `podman`, `shifter`, `charliecloud` and `conda` which instruct the pipeline to use the named tool for software management. For example, `-profile test,docker`.
-   > - Please check [nf-core/configs](https://github.com/nf-core/configs#documentation) to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use `-profile <institute>` in your command. This will enable either `docker` or `singularity` and set the appropriate execution settings for your local compute environment.
-   > - If you are using `singularity`, please use the [`nf-core download`](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) command to download images first, before running the pipeline. Setting the [`NXF_SINGULARITY_CACHEDIR` or `singularity.cacheDir`](https://www.nextflow.io/docs/latest/singularity.html?#singularity-docker-hub) Nextflow options enables you to store and re-use the images from a central location for future pipeline runs.
-   > - If you are using `conda`, it is highly recommended to use the [`NXF_CONDA_CACHEDIR` or `conda.cacheDir`](https://www.nextflow.io/docs/latest/conda.html) settings to store the environments in a central location for future pipeline runs.
+> - The pipeline comes with config profiles called `docker`, `singularity`, `podman`, `shifter`, `charliecloud` and `conda` which instruct the pipeline to use the named tool for software management. For example, `-profile test,docker`.
+> - Please check [nf-core/configs](https://github.com/nf-core/configs#documentation) to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use `-profile <institute>` in your command. This will enable either `docker` or `singularity` and set the appropriate execution settings for your local compute environment.
+> - If you are using `singularity`, please use the [`nf-core download`](https://nf-co.re/tools/#downloading-pipelines-for-offline-use) command to download images first, before running the pipeline. Setting the [`NXF_SINGULARITY_CACHEDIR` or `singularity.cacheDir`](https://www.nextflow.io/docs/latest/singularity.html?#singularity-docker-hub) Nextflow options enables you to store and re-use the images from a central location for future pipeline runs.
+> - If you are using `conda`, it is highly recommended to use the [`NXF_CONDA_CACHEDIR` or `conda.cacheDir`](https://www.nextflow.io/docs/latest/conda.html) settings to store the environments in a central location for future pipeline runs.
 
-4. Start running your own analysis!
+- Start running your own analysis!
 
-   ```bash
-   nextflow run dalmolingroup/euryale --input samplesheet.csv --outdir <OUTDIR> --kaiju_db kaiju_reference --diamond_db diamond_db --reference_fasta diamond_fasta --host_fasta host_reference_fasta --id_mapping id_mapping_file -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
-   ```
+```bash
+nextflow run dalmolingroup/euryale \
+  --input samplesheet.csv \
+  --outdir <OUTDIR> \
+  --kaiju_db kaiju_reference \
+  --diamond_db diamond_db \
+  --reference_fasta diamond_fasta \
+  --host_fasta host_reference_fasta \
+  --id_mapping id_mapping_file \
+  -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+```
+
+## Documentation
+
+The dalmolingroup/euryale documentation is split into the following pages:
+
+- [Usage](usage.md)
+
+      - An overview of how the pipeline works, how to run it and a description of all of the different command-line flags.
+
+- [Output](output.md)
+
+      - An overview of the different results produced by the pipeline and how to interpret them.
 
 ## Credits
 
@@ -60,10 +80,6 @@ dalmolingroup/euryale was originally written by João Cavalcante.
 We thank the following people for their extensive assistance in the development of this pipeline:
 
 - Diego Morais (for developing the original [MEDUSA](https://github.com/dalmolingroup/medusa) pipeline)
-
-## Contributions and Support
-
-If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
 
 ## Citations
 

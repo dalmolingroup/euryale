@@ -1,0 +1,15 @@
+site_name: EURYALE
+site_description: A pipeline for taxonomic classification and functional annotation of metagenomic reads.
+site_author: Dalmolin Group
+nav:
+  - Home: README.md
+  - Usage: usage.md
+  - Output: output.md
+  - Citations: CITATIONS.md
+  - Reference:
+      - Parameters: params.md
+repo_url: https://github.com/dalmolingroup/euryale
+theme:
+  name: "readthedocs"
+plugins:
+  - search
