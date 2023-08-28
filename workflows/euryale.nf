@@ -80,6 +80,7 @@ workflow EURYALE {
     ch_diamond_db = params.diamond_db ? file(params.diamond_db) : []
     ch_id_mapping = params.id_mapping ? file(params.id_mapping) : []
     ch_host_reference = params.host_fasta ? Channel.value([ [id: "host_reference"], file(params.host_fasta)]) : false
+    ch_multiqc_files = Channel.empty()
 
     //
     // SUBWORKFLOW: Read in samplesheet, validate and stage input files
@@ -102,6 +103,7 @@ workflow EURYALE {
         PREPROCESS.out.merged_reads
             .set { clean_reads }
     }
+    ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
 
     if (ch_host_reference) {
         HOST_REMOVAL (
@@ -139,24 +141,33 @@ workflow EURYALE {
         FASTX_COLLAPSER.out.collapsed.set { clean_reads }
     }
 
-    ALIGNMENT (
-        clean_reads,
-        ch_reference_fasta,
-        ch_diamond_db
-    )
-    ch_versions = ch_versions.mix(ALIGNMENT.out.versions)
+     if (!params.skip_alignment) {
+        ALIGNMENT (
+            clean_reads,
+            ch_reference_fasta,
+            ch_diamond_db
+        )
+        ALIGNMENT.out.alignments.set{alignments}
+        ch_versions = ch_versions.mix(ALIGNMENT.out.versions)
+        ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.multiqc_files.collect())
+    }
 
-    TAXONOMY (
-        clean_reads,
-        ch_kaiju_db
-    )
-    ch_versions = ch_versions.mix(TAXONOMY.out.versions)
+    if (!params.skip_classification) {
+        TAXONOMY (
+            clean_reads,
+            ch_kaiju_db
+        )
+        ch_versions = ch_versions.mix(TAXONOMY.out.versions)
+        ch_multiqc_files = ch_multiqc_files.mix(TAXONOMY.out.kaiju_report.collect{it[1]}.ifEmpty([]))
+    }
 
-    FUNCTIONAL (
-        ALIGNMENT.out.alignments,
-        ch_id_mapping
-    )
 
+    if (!params.skip_functional && !params.skip_alignment) {
+        FUNCTIONAL (
+            alignments,
+            ch_id_mapping
+        )
+    }
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
@@ -171,13 +182,9 @@ workflow EURYALE {
     methods_description    = WorkflowEuryale.methodsDescriptionText(workflow, ch_multiqc_custom_methods_description)
     ch_methods_description = Channel.value(methods_description)
 
-    ch_multiqc_files = Channel.empty()
     ch_multiqc_files = ch_multiqc_files.mix(ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(ch_methods_description.collectFile(name: 'methods_description_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect())
-    ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
-    ch_multiqc_files = ch_multiqc_files.mix(TAXONOMY.out.kaiju_report.collect{it[1]}.ifEmpty([]))
-    ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.multiqc_files.collect())
 
     MULTIQC (
         ch_multiqc_files.collect(),
