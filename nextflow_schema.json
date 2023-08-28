@@ -46,6 +46,30 @@
                 }
             }
         },
+        "skip_steps": {
+            "title": "Skip Steps",
+            "type": "object",
+            "description": "Choose to skip pipeline steps",
+            "default": "",
+            "properties": {
+                "skip_classification": {
+                    "type": "boolean",
+                    "fa_icon": "fab fa-pagelines",
+                    "description": "Skip taxonomic classification"
+                },
+                "skip_alignment": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-align-justify",
+                    "description": "Skip alignment"
+                },
+                "skip_functional": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-database",
+                    "description": "Skip functional annotation"
+                }
+            },
+            "fa_icon": "fas fa-angle-double-right"
+        },
         "decontamination": {
             "title": "Decontamination",
             "type": "object",
@@ -321,6 +345,9 @@
             "$ref": "#/definitions/input_output_options"
         },
         {
+            "$ref": "#/definitions/skip_steps"
+        },
+        {
             "$ref": "#/definitions/decontamination"
         },
         {
@@ -344,5 +371,11 @@
         {
             "$ref": "#/definitions/generic_options"
         }
-    ]
+    ],
+    "properties": {
+        "schema_ignore_params": {
+            "type": "string",
+            "default": "genomes"
+        }
+    }
 }
