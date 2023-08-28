@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="A pipeline for taxonomic classification and functional annotation of metagenomic reads." /><meta name="author" content="Dalmolin Group" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>EURYALE</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Home";
+        var mkdocs_page_input_path = "README.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> EURYALE
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="usage/">Usage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="output/">Output</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="CITATIONS/">Citations</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="params/">Parameters</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">EURYALE</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dalmolingroup/euryale/edit/master/docs/README.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="introduction">Introduction</h2>
+<p><strong>dalmolingroup/euryale</strong> is a pipeline for taxonomic classification and functional annotation of metagenomic reads. Based on <a href="https://github.com/dalmolingroup/medusa">MEDUSA</a>.</p>
+<p>The pipeline is built using <a href="https://www.nextflow.io">Nextflow</a>, a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The <a href="https://www.nextflow.io/docs/latest/dsl2.html">Nextflow DSL2</a> implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from <a href="https://github.com/nf-core/modules">nf-core/modules</a> in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!</p>
+<h2 id="pipeline-summary">Pipeline summary</h2>
+<h3 id="pre-processing">Pre-processing</h3>
+<ul>
+<li>Read QC (<a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>FastQC</code></a>)</li>
+<li>Read trimming and merging (<a href="https://github.com/OpenGene/fastp"><code>fastp</code></a>)</li>
+<li>(<em>optionally</em>) Host read removal (<a href="https://bowtie-bio.sourceforge.net/bowtie2/manual.shtml"><code>BowTie2</code></a>)</li>
+<li>Duplicated sequence removal (<a href="http://hannonlab.cshl.edu/fastx_toolkit/"><code>fastx collapser</code></a>)</li>
+<li>Present QC and other data (<a href="http://multiqc.info/"><code>MultiQC</code></a>)</li>
+</ul>
+<h3 id="assembly">Assembly</h3>
+<ul>
+<li>(<em>optionally</em>) Read assembly (<a href="https://github.com/voutcn/megahit"><code>MEGAHIT</code></a>)</li>
+</ul>
+<h3 id="taxonomic-classification">Taxonomic classification</h3>
+<ul>
+<li>Sequence classification (<a href="https://github.com/bioinformatics-centre/kaiju/"><code>Kaiju</code></a>)</li>
+<li>Visualization (<a href="https://github.com/marbl/Krona/wiki"><code>Krona</code></a>)</li>
+</ul>
+<h3 id="functional-annotation">Functional annotation</h3>
+<ul>
+<li>Sequence alignment (<a href="https://github.com/bbuchfink/diamond"><code>DIAMOND</code></a>)</li>
+<li>Map alignment matches to functional database (<a href="https://github.com/dalmolingroup/annotate"><code>annotate</code></a>)</li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<ol>
+<li>
+<p>Install <a href="https://www.nextflow.io/docs/latest/getstarted.html#installation"><code>Nextflow</code></a> (<code>&gt;=22.10.1</code>)</p>
+</li>
+<li>
+<p>Install any of <a href="https://docs.docker.com/engine/installation/"><code>Docker</code></a>, <a href="https://www.sylabs.io/guides/3.0/user-guide/"><code>Singularity</code></a> (you can follow <a href="https://singularity-tutorial.github.io/01-installation/">this tutorial</a>), <a href="https://podman.io/"><code>Podman</code></a>, <a href="https://nersc.gitlab.io/development/shifter/how-to-use/"><code>Shifter</code></a> or <a href="https://hpc.github.io/charliecloud/"><code>Charliecloud</code></a> for full pipeline reproducibility <em>(you can use <a href="https://conda.io/miniconda.html"><code>Conda</code></a> both to install Nextflow itself and also to manage software within pipelines. Please only use it within pipelines as a last resort; see <a href="https://nf-co.re/usage/configuration#basic-configuration-profiles">docs</a>)</em>.</p>
+</li>
+<li>
+<p>Download the pipeline and test it on a minimal dataset with a single command:</p>
+</li>
+</ol>
+<pre><code class="language-bash">nextflow run dalmolingroup/euryale -profile test,YOURPROFILE --outdir &lt;OUTDIR&gt;
+</code></pre>
+<p>Note that some form of configuration will be needed so that Nextflow knows how to fetch the required software. This is usually done in the form of a config profile (<code>YOURPROFILE</code> in the example command above). You can chain multiple config profiles in a comma-separated string.</p>
+<blockquote>
+<ul>
+<li>The pipeline comes with config profiles called <code>docker</code>, <code>singularity</code>, <code>podman</code>, <code>shifter</code>, <code>charliecloud</code> and <code>conda</code> which instruct the pipeline to use the named tool for software management. For example, <code>-profile test,docker</code>.</li>
+<li>Please check <a href="https://github.com/nf-core/configs#documentation">nf-core/configs</a> to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use <code>-profile &lt;institute&gt;</code> in your command. This will enable either <code>docker</code> or <code>singularity</code> and set the appropriate execution settings for your local compute environment.</li>
+<li>If you are using <code>singularity</code>, please use the <a href="https://nf-co.re/tools/#downloading-pipelines-for-offline-use"><code>nf-core download</code></a> command to download images first, before running the pipeline. Setting the <a href="https://www.nextflow.io/docs/latest/singularity.html?#singularity-docker-hub"><code>NXF_SINGULARITY_CACHEDIR</code> or <code>singularity.cacheDir</code></a> Nextflow options enables you to store and re-use the images from a central location for future pipeline runs.</li>
+<li>If you are using <code>conda</code>, it is highly recommended to use the <a href="https://www.nextflow.io/docs/latest/conda.html"><code>NXF_CONDA_CACHEDIR</code> or <code>conda.cacheDir</code></a> settings to store the environments in a central location for future pipeline runs.</li>
+</ul>
+</blockquote>
+<ul>
+<li>Start running your own analysis!</li>
+</ul>
+<pre><code class="language-bash">nextflow run dalmolingroup/euryale \
+  --input samplesheet.csv \
+  --outdir &lt;OUTDIR&gt; \
+  --kaiju_db kaiju_reference \
+  --diamond_db diamond_db \
+  --reference_fasta diamond_fasta \
+  --host_fasta host_reference_fasta \
+  --id_mapping id_mapping_file \
+  -profile &lt;docker/singularity/podman/shifter/charliecloud/conda/institute&gt;
+</code></pre>
+<h2 id="documentation">Documentation</h2>
+<p>The dalmolingroup/euryale documentation is split into the following pages:</p>
+<ul>
+<li>
+<p><a href="usage/">Usage</a></p>
+<ul>
+<li>An overview of how the pipeline works, how to run it and a description of all of the different command-line flags.</li>
+</ul>
+</li>
+<li>
+<p><a href="output/">Output</a></p>
+<ul>
+<li>An overview of the different results produced by the pipeline and how to interpret them.</li>
+</ul>
+</li>
+</ul>
+<h2 id="credits">Credits</h2>
+<p>dalmolingroup/euryale was originally written by João Cavalcante.</p>
+<p>We thank the following people for their extensive assistance in the development of this pipeline:</p>
+<ul>
+<li>Diego Morais (for developing the original <a href="https://github.com/dalmolingroup/medusa">MEDUSA</a> pipeline)</li>
+</ul>
+<h2 id="citations">Citations</h2>
+<blockquote>
+<p>Morais DAA, Cavalcante JVF, Monteiro SS, Pasquali MAB and Dalmolin RJS (2022)
+MEDUSA: A Pipeline for Sensitive Taxonomic Classification and Flexible Functional Annotation
+of Metagenomic Shotgun Sequences.
+Front. Genet. 13:814437. doi: 10.3389/fgene.2022.814437</p>
+</blockquote>
+<p>This pipeline uses code and infrastructure developed and maintained by the <a href="https://nf-co.re">nf-core</a> community, reused here under the <a href="https://github.com/nf-core/tools/blob/master/LICENSE">MIT license</a>.</p>
+<blockquote>
+<p><strong>The nf-core framework for community-curated bioinformatics pipelines.</strong></p>
+<p>Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso &amp; Sven Nahnsen.</p>
+<p><em>Nat Biotechnol.</em> 2020 Feb 13. doi: <a href="https://dx.doi.org/10.1038/s41587-020-0439-x">10.1038/s41587-020-0439-x</a>.</p>
+</blockquote>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="usage/" class="btn btn-neutral float-right" title="Usage">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dalmolingroup/euryale" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+      <span><a href="usage/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.4.3
+Build Date UTC : 2023-08-28 19:38:54.028294+00:00
+-->

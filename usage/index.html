@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Dalmolin Group" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Usage - EURYALE</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Usage";
+        var mkdocs_page_input_path = "usage.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> EURYALE
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Usage</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#samplesheet-input">Samplesheet input</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#multiple-runs-of-the-same-sample">Multiple runs of the same sample</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#full-samplesheet">Full samplesheet</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#running-the-pipeline">Running the pipeline</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#updating-the-pipeline">Updating the pipeline</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reproducibility">Reproducibility</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#core-nextflow-arguments">Core Nextflow arguments</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#-profile">-profile</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#-resume">-resume</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#-c">-c</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#custom-configuration">Custom configuration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#resource-requests">Resource requests</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#for-beginners">For beginners</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#advanced-option-on-process-level">Advanced option on process level</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#updating-containers-advanced-users">Updating containers (advanced users)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#running-in-the-background">Running in the background</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#nextflow-memory-requirements">Nextflow memory requirements</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../output/">Output</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CITATIONS/">Citations</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../params/">Parameters</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">EURYALE</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li>Usage</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dalmolingroup/euryale/edit/master/docs/usage.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="dalmolingroupeuryale-usage">dalmolingroup/euryale: Usage</h1>
+<blockquote>
+<p><em>Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files.</em></p>
+</blockquote>
+<h2 id="introduction">Introduction</h2>
+<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
+
+<h2 id="samplesheet-input">Samplesheet input</h2>
+<p>You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.</p>
+<pre><code class="language-bash">--input '[path to samplesheet file]'
+</code></pre>
+<h3 id="multiple-runs-of-the-same-sample">Multiple runs of the same sample</h3>
+<p>The <code>sample</code> identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:</p>
+<pre><code class="language-console">sample,fastq_1,fastq_2
+CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
+CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
+</code></pre>
+<h3 id="full-samplesheet">Full samplesheet</h3>
+<p>The pipeline will auto-detect whether a sample is single- or paired-end using the information provided in the samplesheet. The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 3 columns to match those defined in the table below.</p>
+<p>A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where <code>TREATMENT_REP3</code> has been sequenced twice.</p>
+<pre><code class="language-console">sample,fastq_1,fastq_2
+CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
+CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
+TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
+TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
+TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
+TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sample</code></td>
+<td>Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (<code>_</code>).</td>
+</tr>
+<tr>
+<td><code>fastq_1</code></td>
+<td>Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".</td>
+</tr>
+<tr>
+<td><code>fastq_2</code></td>
+<td>Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".</td>
+</tr>
+</tbody>
+</table>
+<p>An <a href="https://github.com/dalmolingroup/euryale/blob/main/test_data/samplesheet.csv">example samplesheet</a> has been provided with the pipeline.</p>
+<h2 id="running-the-pipeline">Running the pipeline</h2>
+<p>The typical command for running the pipeline is as follows:</p>
+<pre><code class="language-bash">nextflow run dalmolingroup/euryale --input samplesheet.csv --outdir &lt;OUTDIR&gt; --genome GRCh37 -profile docker
+</code></pre>
+<p>This will launch the pipeline with the <code>docker</code> configuration profile. See below for more information about profiles.</p>
+<p>Note that the pipeline will create the following files in your working directory:</p>
+<pre><code class="language-bash">work                # Directory containing the nextflow working files
+&lt;OUTDIR&gt;            # Finished results in specified location (defined with --outdir)
+.nextflow_log       # Log file from Nextflow
+# Other nextflow hidden files, eg. history of pipeline runs and old logs.
+</code></pre>
+<h3 id="updating-the-pipeline">Updating the pipeline</h3>
+<p>When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:</p>
+<pre><code class="language-bash">nextflow pull dalmolingroup/euryale
+</code></pre>
+<h3 id="reproducibility">Reproducibility</h3>
+<p>It is a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.</p>
+<p>First, go to the <a href="https://github.com/dalmolingroup/euryale/releases">dalmolingroup/euryale releases page</a> and find the latest pipeline version - numeric only (eg. <code>1.3.1</code>). Then specify this when running the pipeline with <code>-r</code> (one hyphen) - eg. <code>-r 1.3.1</code>. Of course, you can switch to another version by changing the number after the <code>-r</code> flag.</p>
+<p>This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future. For example, at the bottom of the MultiQC reports.</p>
+<h2 id="core-nextflow-arguments">Core Nextflow arguments</h2>
+<blockquote>
+<p><strong>NB:</strong> These options are part of Nextflow and use a <em>single</em> hyphen (pipeline parameters use a double-hyphen).</p>
+</blockquote>
+<h3 id="-profile"><code>-profile</code></h3>
+<p>Use this parameter to choose a configuration profile. Profiles can give configuration presets for different compute environments.</p>
+<p>Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Conda) - see below.</p>
+<blockquote>
+<p>We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.</p>
+</blockquote>
+<p>Note that multiple profiles can be loaded, for example: <code>-profile test,docker</code> - the order of arguments is important!
+They are loaded in sequence, so later profiles can overwrite earlier profiles.</p>
+<p>If <code>-profile</code> is not specified, the pipeline will run locally and expect all software to be installed and available on the <code>PATH</code>. This is <em>not</em> recommended, since it can lead to different results on different machines dependent on the computer enviroment.</p>
+<ul>
+<li><code>test</code></li>
+<li>A profile with a complete configuration for automated testing</li>
+<li>Includes links to test data so needs no other parameters</li>
+<li><code>docker</code></li>
+<li>A generic configuration profile to be used with <a href="https://docker.com/">Docker</a></li>
+<li><code>singularity</code></li>
+<li>A generic configuration profile to be used with <a href="https://sylabs.io/docs/">Singularity</a></li>
+<li><code>podman</code></li>
+<li>A generic configuration profile to be used with <a href="https://podman.io/">Podman</a></li>
+<li><code>shifter</code></li>
+<li>A generic configuration profile to be used with <a href="https://nersc.gitlab.io/development/shifter/how-to-use/">Shifter</a></li>
+<li><code>charliecloud</code></li>
+<li>A generic configuration profile to be used with <a href="https://hpc.github.io/charliecloud/">Charliecloud</a></li>
+<li><code>conda</code></li>
+<li>A generic configuration profile to be used with <a href="https://conda.io/docs/">Conda</a>. Please only use Conda as a last resort i.e. when it's not possible to run the pipeline with Docker, Singularity, Podman, Shifter or Charliecloud.</li>
+</ul>
+<h3 id="-resume"><code>-resume</code></h3>
+<p>Specify this when restarting a pipeline. Nextflow will use cached results from any pipeline steps where the inputs are the same, continuing from where it got to previously. For input to be considered the same, not only the names must be identical but the files' contents as well. For more info about this parameter, see <a href="https://www.nextflow.io/blog/2019/demystifying-nextflow-resume.html">this blog post</a>.</p>
+<p>You can also supply a run name to resume a specific run: <code>-resume [run-name]</code>. Use the <code>nextflow log</code> command to show previous run names.</p>
+<h3 id="-c"><code>-c</code></h3>
+<p>Specify the path to a specific config file (this is a core Nextflow command). See the <a href="https://nf-co.re/usage/configuration">nf-core website documentation</a> for more information.</p>
+<h2 id="custom-configuration">Custom configuration</h2>
+<h3 id="resource-requests">Resource requests</h3>
+<p>Whilst the default requirements set within the pipeline will hopefully work for most people and with most input data, you may find that you want to customise the compute resources that the pipeline requests. Each step in the pipeline has a default set of requirements for number of CPUs, memory and time. For most of the steps in the pipeline, if the job exits with any of the error codes specified <a href="https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/conf/base.config#L18">here</a> it will automatically be resubmitted with higher requests (2 x original, then 3 x original). If it still fails after the third attempt then the pipeline execution is stopped.</p>
+<p>For example, if the nf-core/rnaseq pipeline is failing after multiple re-submissions of the <code>STAR_ALIGN</code> process due to an exit code of <code>137</code> this would indicate that there is an out of memory issue:</p>
+<pre><code class="language-console">[62/149eb0] NOTE: Process `NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (WT_REP1)` terminated with an error exit status (137) -- Execution is retried (1)
+Error executing process &gt; 'NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (WT_REP1)'
+
+Caused by:
+    Process `NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (WT_REP1)` terminated with an error exit status (137)
+
+Command executed:
+    STAR \
+        --genomeDir star \
+        --readFilesIn WT_REP1_trimmed.fq.gz  \
+        --runThreadN 2 \
+        --outFileNamePrefix WT_REP1. \
+        &lt;TRUNCATED&gt;
+
+Command exit status:
+    137
+
+Command output:
+    (empty)
+
+Command error:
+    .command.sh: line 9:  30 Killed    STAR --genomeDir star --readFilesIn WT_REP1_trimmed.fq.gz --runThreadN 2 --outFileNamePrefix WT_REP1. &lt;TRUNCATED&gt;
+Work dir:
+    /home/pipelinetest/work/9d/172ca5881234073e8d76f2a19c88fb
+
+Tip: you can replicate the issue by changing to the process work dir and entering the command `bash .command.run`
+</code></pre>
+<h4 id="for-beginners">For beginners</h4>
+<p>A first step to bypass this error, you could try to increase the amount of CPUs, memory, and time for the whole pipeline. Therefor you can try to increase the resource for the parameters <code>--max_cpus</code>, <code>--max_memory</code>, and <code>--max_time</code>. Based on the error above, you have to increase the amount of memory. Therefore you can go to the <a href="https://nf-co.re/rnaseq/3.9/parameters">parameter documentation of rnaseq</a> and scroll down to the <code>show hidden parameter</code> button to get the default value for <code>--max_memory</code>. In this case 128GB, you than can try to run your pipeline again with <code>--max_memory 200GB -resume</code> to skip all process, that were already calculated. If you can not increase the resource of the complete pipeline, you can try to adapt the resource for a single process as mentioned below.</p>
+<h4 id="advanced-option-on-process-level">Advanced option on process level</h4>
+<p>To bypass this error you would need to find exactly which resources are set by the <code>STAR_ALIGN</code> process. The quickest way is to search for <code>process STAR_ALIGN</code> in the <a href="https://github.com/nf-core/rnaseq/search?q=process+STAR_ALIGN">nf-core/rnaseq Github repo</a>.
+We have standardised the structure of Nextflow DSL2 pipelines such that all module files will be present in the <code>modules/</code> directory and so, based on the search results, the file we want is <code>modules/nf-core/star/align/main.nf</code>.
+If you click on the link to that file you will notice that there is a <code>label</code> directive at the top of the module that is set to <a href="https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/modules/nf-core/software/star/align/main.nf#L9"><code>label process_high</code></a>.
+The <a href="https://www.nextflow.io/docs/latest/process.html#label">Nextflow <code>label</code></a> directive allows us to organise workflow processes in separate groups which can be referenced in a configuration file to select and configure subset of processes having similar computing requirements.
+The default values for the <code>process_high</code> label are set in the pipeline's <a href="https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/conf/base.config#L33-L37"><code>base.config</code></a> which in this case is defined as 72GB.
+Providing you haven't set any other standard nf-core parameters to <strong>cap</strong> the <a href="https://nf-co.re/usage/configuration#max-resources">maximum resources</a> used by the pipeline then we can try and bypass the <code>STAR_ALIGN</code> process failure by creating a custom config file that sets at least 72GB of memory, in this case increased to 100GB.
+The custom config below can then be provided to the pipeline via the <a href="#-c"><code>-c</code></a> parameter as highlighted in previous sections.</p>
+<pre><code class="language-nextflow">process {
+    withName: 'NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN' {
+        memory = 100.GB
+    }
+}
+</code></pre>
+<blockquote>
+<p><strong>NB:</strong> We specify the full process name i.e. <code>NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN</code> in the config file because this takes priority over the short name (<code>STAR_ALIGN</code>) and allows existing configuration using the full process name to be correctly overridden.</p>
+<p>If you get a warning suggesting that the process selector isn't recognised check that the process name has been specified correctly.</p>
+</blockquote>
+<h3 id="updating-containers-advanced-users">Updating containers (advanced users)</h3>
+<p>The <a href="https://www.nextflow.io/docs/latest/dsl2.html">Nextflow DSL2</a> implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. If for some reason you need to use a different version of a particular tool with the pipeline then you just need to identify the <code>process</code> name and override the Nextflow <code>container</code> definition for that process using the <code>withName</code> declaration. For example, in the <a href="https://nf-co.re/viralrecon">nf-core/viralrecon</a> pipeline a tool called <a href="https://github.com/cov-lineages/pangolin">Pangolin</a> has been used during the COVID-19 pandemic to assign lineages to SARS-CoV-2 genome sequenced samples. Given that the lineage assignments change quite frequently it doesn't make sense to re-release the nf-core/viralrecon everytime a new version of Pangolin has been released. However, you can override the default container used by the pipeline by creating a custom config file and passing it as a command-line argument via <code>-c custom.config</code>.</p>
+<ol>
+<li>Check the default version used by the pipeline in the module file for <a href="https://github.com/nf-core/viralrecon/blob/a85d5969f9025409e3618d6c280ef15ce417df65/modules/nf-core/software/pangolin/main.nf#L14-L19">Pangolin</a></li>
+<li>Find the latest version of the Biocontainer available on <a href="https://quay.io/repository/biocontainers/pangolin?tag=latest&amp;tab=tags">Quay.io</a></li>
+<li>
+<p>Create the custom config accordingly:</p>
+</li>
+<li>
+<p>For Docker:</p>
+<p><code>nextflow
+ process {
+     withName: PANGOLIN {
+         container = 'quay.io/biocontainers/pangolin:3.0.5--pyhdfd78af_0'
+     }
+ }</code></p>
+</li>
+<li>
+<p>For Singularity:</p>
+<p><code>nextflow
+ process {
+     withName: PANGOLIN {
+         container = 'https://depot.galaxyproject.org/singularity/pangolin:3.0.5--pyhdfd78af_0'
+     }
+ }</code></p>
+</li>
+<li>
+<p>For Conda:</p>
+<p><code>nextflow
+ process {
+     withName: PANGOLIN {
+         conda = 'bioconda::pangolin=3.0.5'
+     }
+ }</code></p>
+</li>
+</ol>
+<blockquote>
+<p><strong>NB:</strong> If you wish to periodically update individual tool-specific results (e.g. Pangolin) generated by the pipeline then you must ensure to keep the <code>work/</code> directory otherwise the <code>-resume</code> ability of the pipeline will be compromised and it will restart from scratch.</p>
+</blockquote>
+<h2 id="running-in-the-background">Running in the background</h2>
+<p>Nextflow handles job submissions and supervises the running jobs. The Nextflow process must run until the pipeline is finished.</p>
+<p>The Nextflow <code>-bg</code> flag launches Nextflow in the background, detached from your terminal so that the workflow does not stop if you log out of your session. The logs are saved to a file.</p>
+<p>Alternatively, you can use <code>screen</code> / <code>tmux</code> or similar tool to create a detached session which you can log back into at a later time.
+Some HPC setups also allow you to run nextflow within a cluster job submitted your job scheduler (from where it submits more jobs).</p>
+<h2 id="nextflow-memory-requirements">Nextflow memory requirements</h2>
+<p>In some cases, the Nextflow Java virtual machines can start to request a large amount of memory.
+We recommend adding the following line to your environment to limit this (typically in <code>~/.bashrc</code> or <code>~./bash_profile</code>):</p>
+<pre><code class="language-bash">NXF_OPTS='-Xms1g -Xmx4g'
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../output/" class="btn btn-neutral float-right" title="Output">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dalmolingroup/euryale" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../output/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
