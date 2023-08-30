@@ -33,9 +33,9 @@ process ANNOTATE {
         --identity $minimum_pident \\
         --alen $minimum_alen \\
         --evalue $maximum_evalue \\
-        --alenCol 5 \\
-        --bitscoreCol 13 \\
-        --evalueCol 12 \\
+        --alenCol 3 \\
+        --bitscoreCol 11 \\
+        --evalueCol 10 \\
         -d $annotate_db
     """
 }
