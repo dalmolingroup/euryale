@@ -20,7 +20,7 @@ workflow ALIGNMENT {
         DIAMOND_MAKEDB.out.db.set { diamond_db }
     }
 
-    def blast_columns = "qseqid sseqid pident slen qlen length mismatch gapopen qstart qend sstart send evalue bitscore full_qseq"
+    def blast_columns = "qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore"
     DIAMOND_BLASTX (
         fasta,
         diamond_db,
