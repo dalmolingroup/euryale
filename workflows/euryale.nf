@@ -73,11 +73,13 @@ def multiqc_report = []
 
 workflow EURYALE {
     if (params.reference_fasta == null && params.diamond_db == null) { exit 1, 'A reference fasta (--reference_fasta) or a DIAMOND db (--diamond_db) must be specified' }
+    if (params.host_fasta == null && params.bowtie2_db == null) {exit 1, 'Either a host reference FASTA (--host_fasta) or a pre-built bowtie2 index (--bowtie2_db) must be specified'}
 
     ch_versions = Channel.empty()
     ch_kaiju_db = Channel.value([ [id: "kaiju_db"], file(params.kaiju_db)])
     ch_reference_fasta = params.reference_fasta ? file(params.reference_fasta) : []
     ch_diamond_db = params.diamond_db ? file(params.diamond_db) : []
+    ch_bowtie2_db = params.bowtie2_db ? Channel.value([ [id: "host_db"], file(params.bowtie2_db)]) : []
     ch_id_mapping = params.id_mapping ? file(params.id_mapping) : []
     ch_host_reference = params.host_fasta ? Channel.value([ [id: "host_reference"], file(params.host_fasta)]) : false
     ch_multiqc_files = Channel.empty()
@@ -105,10 +107,11 @@ workflow EURYALE {
     }
     ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
 
-    if (ch_host_reference) {
+    if (ch_host_reference || ch_bowtie2_db) {
         HOST_REMOVAL (
             clean_reads,
-            ch_host_reference
+            ch_host_reference,
+            ch_bowtie2_db
         )
 
         HOST_REMOVAL.out.unaligned_reads

@@ -9,19 +9,23 @@ workflow HOST_REMOVAL {
     take:
     reads
     host_genome
+    bowtie2_db
 
     main:
 
     ch_versions = Channel.empty()
 
-    BOWTIE2_BUILD (
-        host_genome
-    )
-    ch_versions = ch_versions.mix(BOWTIE2_BUILD.out.versions)
+    if (!bowtie2_db) {
+        BOWTIE2_BUILD (
+            host_genome
+        )
+        BOWTIE2_BUILD.out.index.set { bowtie2_db }
+        ch_versions = ch_versions.mix(BOWTIE2_BUILD.out.versions)
+    }
 
     BOWTIE2_ALIGN (
         reads,
-        BOWTIE2_BUILD.out.index,
+        bowtie2_db,
         true,
         false
     )
