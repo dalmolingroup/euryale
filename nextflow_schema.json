@@ -79,8 +79,13 @@
             "properties": {
                 "host_fasta": {
                     "type": "string",
-                    "default": "None",
-                    "fa_icon": "fas fa-align-justify"
+                    "fa_icon": "fas fa-align-justify",
+                    "description": "Host FASTA to use for decontamination"
+                },
+                "bowtie2_db": {
+                    "type": "string",
+                    "fa_icon": "fas fa-database",
+                    "description": "Pre-built bowtie2 index. Directory where index is located."
                 }
             }
         },
@@ -92,13 +97,11 @@
             "properties": {
                 "reference_fasta": {
                     "type": "string",
-                    "default": "None",
                     "description": "Path to FASTA genome file.",
                     "fa_icon": "fas fa-align-justify"
                 },
                 "diamond_db": {
                     "type": "string",
-                    "default": "None",
                     "description": "Path to pre-built DIAMOND db.",
                     "fa_icon": "fas fa-database"
                 }
@@ -113,7 +116,6 @@
             "properties": {
                 "kaiju_db": {
                     "type": "string",
-                    "default": "None",
                     "fa_icon": "fas fa-database"
                 }
             },
@@ -128,7 +130,6 @@
             "properties": {
                 "id_mapping": {
                     "type": "string",
-                    "default": "None",
                     "description": "Path to ID mapping file to be used for the Functional annotation"
                 },
                 "minimum_bitscore": {
@@ -196,8 +197,7 @@
                     "help_text": "Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`."
                 },
                 "fasta": {
-                    "type": "string",
-                    "default": "None"
+                    "type": "string"
                 }
             }
         },
@@ -336,6 +336,11 @@
                     "description": "Show all params when using `--help`",
                     "hidden": true,
                     "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
+                },
+                "schema_ignore_params": {
+                    "type": "string",
+                    "default": "genomes",
+                    "hidden": true
                 }
             }
         }
@@ -371,11 +376,5 @@
         {
             "$ref": "#/definitions/generic_options"
         }
-    ],
-    "properties": {
-        "schema_ignore_params": {
-            "type": "string",
-            "default": "genomes"
-        }
-    }
+    ]
 }
