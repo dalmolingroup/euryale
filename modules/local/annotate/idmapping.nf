@@ -1,5 +1,6 @@
 process ANNOTATE {
     label 'process_medium'
+    maxForks 1
 
     conda "arthurvinx::medusaPipeline"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
