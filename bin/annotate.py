@@ -74,15 +74,15 @@ def getAll(
             query = ls[queryCol]
             if not checkHit(ls, alen, evalue, bitscore, identity, alenCol, evalueCol, bitscoreCol, pidentCol):
                 if unknown:
-                    write(out, query, "Unknown")
+                    write(out, query.decode(), "Unknown")
                 continue
-            result = db.get(ls[subjectCol].strip().encode())
+            result = db.get(ls[subjectCol].strip())
             if result == None:
                 if unknown:
-                    write(out, query, "Unknown")
+                    write(out, query.decode(), "Unknown")
                 continue
             result = result.decode()
-            write(out, query, result)
+            write(out, query.decode(), result)
 
 
 def getBestHits(
@@ -146,19 +146,19 @@ def getBestHits(
             else:
                 if query != ls[queryCol]:
                     if unknown:
-                        write(out, query, "Unknown")
+                        write(out, query.decode(), "Unknown")
                     query = ls[queryCol]
             if not checkHit(ls, alen, evalue, bitscore, identity, alenCol, evalueCol, bitscoreCol, pidentCol):
                 continue
-            result = db.get(ls[subjectCol].strip().encode())
+            result = db.get(ls[subjectCol].strip())
             if result == None:
                 continue
             result = result.decode()
-            write(out, query, result)
+            write(out, query.decode(), result)
             match = True
     if not match:
         if unknown:
-            write(out, query, "Unknown")
+            write(out, query.decode(), "Unknown")
 
 
 def checkHit(ls, alen, evalue, bitscore, identity, alenCol, evalueCol, bitscoreCol, pidentCol):
@@ -270,7 +270,7 @@ idmapping_parser.add_argument(
     type=str2bool,
     default=True,
 )
-idmapping_parser.add_argument("--sep", help="The separator between columns (default: \\t)", default="\t")
+idmapping_parser.add_argument("--sep", help="The separator between columns (default: \\t)", default=b"\t")
 
 fixplyvel = subparsers.add_parser("fixplyvel", description="Fix plyvel undefined symbol error by reinstalling it")
 args = parser.parse_args()
