@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import gzip
 import plyvel
 import os
 import time
@@ -42,7 +43,7 @@ def getAll(
 ):
     check = True
     query = None
-    with open(input, "r") as f:
+    with gzip.open(input, "rb") as f:
         write(out, "Query", "Annotation")
         for line in f:
             ls = line.split(sep)
@@ -105,7 +106,7 @@ def getBestHits(
     match = False
     check = True
     query = None
-    with open(input, "r") as f:
+    with gzip.open(input, "rb") as f:
         write(out, "Query", "Annotation")
         for line in f:
             ls = line.split(sep)
