@@ -97,14 +97,18 @@ workflow EURYALE {
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
     INPUT_CHECK.out.reads.set { reads }
 
-    PREPROCESS (
-        reads
-    )
-    ch_versions = ch_versions.mix(PREPROCESS.out.versions)
+    if (params.skip_preprocess) {
+        clean_reads = reads
+    } else {
+        PREPROCESS (
+            reads
+        )
+        ch_versions = ch_versions.mix(PREPROCESS.out.versions)
 
-    PREPROCESS.out.reads
-        .set { clean_reads }
-    ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
+        PREPROCESS.out.reads
+            .set { clean_reads }
+        ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
+    }
 
     if (ch_host_reference || ch_bowtie2_db) {
         HOST_REMOVAL (
