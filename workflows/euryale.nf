@@ -76,6 +76,7 @@ workflow EURYALE {
     if (params.host_fasta == null && params.bowtie2_db == null) {exit 1, 'Either a host reference FASTA (--host_fasta) or a pre-built bowtie2 index (--bowtie2_db) must be specified'}
     if (params.run_kaiju == true && params.kaiju_db == null) {exit 1, 'A Kaiju tar.gz database must be specified with --kaiju_db'}
     if (params.run_kraken2 == true && params.kraken2_db == null) {exit 1, 'A Kraken2 database must be specified with --kraken2_db'}
+    if (params.host_fasta == null && params.bowtie2_db == null && params.skip_host_removal == false) {exit 1, 'Either a host reference FASTA (--host_fasta) or a pre-built bowtie2 index (--bowtie2_db) must be specified'}
 
     ch_versions = Channel.empty()
     ch_kraken_db = params.run_kraken2 ? file(params.kraken2_db) : []
