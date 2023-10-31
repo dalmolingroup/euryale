@@ -132,7 +132,7 @@ workflow EURYALE {
         ch_versions = ch_versions.mix(ASSEMBLY.out.versions)
     }
 
-    if (!params.assembly_based) {
+    if (!params.assembly_based && !params.skip_preprocess) {
         GUNZIP (
             clean_reads
         )
