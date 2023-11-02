@@ -1,3 +1,12 @@
+[![nf-core CI](https://github.com/dalmolingroup/euryale/actions/workflows/ci.yml/badge.svg)](https://github.com/dalmolingroup/euryale/actions/workflows/ci.yml)
+[![docs](https://github.com/dalmolingroup/euryale/actions/workflows/docs.yml/badge.svg)](https://github.com/dalmolingroup/euryale/actions/workflows/docs.yml)
+
+[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A522.10.1-4bc7e2a.svg?labelColor=000000)](https://www.nextflow.io/)
+[![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
+[![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
+
+![EURYALE Logo](assets/euryale_logo.png)
+
 ## Introduction
 
 **dalmolingroup/euryale** is a pipeline for taxonomic classification and functional annotation of metagenomic reads. Based on [MEDUSA](https://github.com/dalmolingroup/medusa).
@@ -9,7 +18,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 <picture>
 
   <source media="(prefers-color-scheme: dark)" srcset="./assets/euryale_workflow.drawio.png">
-  <img alt="ARETE diagram" src="./assets/euryale_workflow.light.png">
+  <img alt="EURYALE diagram" src="./assets/euryale_workflow.light.png">
 </picture>
 
 ### Pre-processing
