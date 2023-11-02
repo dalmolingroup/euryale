@@ -86,10 +86,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h2 id="introduction">Introduction</h2>
+                <p><a href="https://github.com/dalmolingroup/euryale/actions/workflows/ci.yml"><img alt="nf-core CI" src="https://github.com/dalmolingroup/euryale/actions/workflows/ci.yml/badge.svg" /></a>
+<a href="https://github.com/dalmolingroup/euryale/actions/workflows/docs.yml"><img alt="docs" src="https://github.com/dalmolingroup/euryale/actions/workflows/docs.yml/badge.svg" /></a></p>
+<p><a href="https://www.nextflow.io/"><img alt="Nextflow" src="https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A522.10.1-4bc7e2a.svg?labelColor=000000" /></a>
+<a href="https://www.docker.com/"><img alt="run with docker" src="https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&amp;logo=docker" /></a>
+<a href="https://sylabs.io/docs/"><img alt="run with singularity" src="https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000" /></a></p>
+<p><img alt="EURYALE Logo" src="assets/euryale_logo.png" /></p>
+<h2 id="introduction">Introduction</h2>
 <p><strong>dalmolingroup/euryale</strong> is a pipeline for taxonomic classification and functional annotation of metagenomic reads. Based on <a href="https://github.com/dalmolingroup/medusa">MEDUSA</a>.</p>
 <p>The pipeline is built using <a href="https://www.nextflow.io">Nextflow</a>, a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. The <a href="https://www.nextflow.io/docs/latest/dsl2.html">Nextflow DSL2</a> implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. Where possible, these processes have been submitted to and installed from <a href="https://github.com/nf-core/modules">nf-core/modules</a> in order to make them available to all nf-core pipelines, and to everyone within the Nextflow community!</p>
 <h2 id="pipeline-summary">Pipeline summary</h2>
+<p><picture></p>
+<p><source media="(prefers-color-scheme: dark)" srcset="./assets/euryale_workflow.drawio.png">
+  <img alt="EURYALE diagram" src="./assets/euryale_workflow.light.png">
+</picture></p>
 <h3 id="pre-processing">Pre-processing</h3>
 <ul>
 <li>Read QC (<a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>FastQC</code></a>)</li>
@@ -105,6 +115,7 @@
 <h3 id="taxonomic-classification">Taxonomic classification</h3>
 <ul>
 <li>Sequence classification (<a href="https://github.com/bioinformatics-centre/kaiju/"><code>Kaiju</code></a>)</li>
+<li>(<strong>WIP</strong>) Sequence classification (<a href="https://github.com/DerrickWood/kraken2"><code>Kraken2</code></a>)</li>
 <li>Visualization (<a href="https://github.com/marbl/Krona/wiki"><code>Krona</code></a>)</li>
 </ul>
 <h3 id="functional-annotation">Functional annotation</h3>
@@ -235,5 +246,5 @@ Front. Genet. 13:814437. doi: 10.3389/fgene.2022.814437</p>
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-10-18 13:29:05.988264+00:00
+Build Date UTC : 2023-11-02 12:48:07.722070+00:00
 -->
