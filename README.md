@@ -6,6 +6,12 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 ## Pipeline summary
 
+<picture>
+
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/euryale_workflow.drawio.png">
+  <img alt="ARETE diagram" src="./assets/euryale_workflow.light.png">
+</picture>
+
 ### Pre-processing
 
 - Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
@@ -21,6 +27,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 ### Taxonomic classification
 
 - Sequence classification ([`Kaiju`](https://github.com/bioinformatics-centre/kaiju/))
+- (**WIP**) Sequence classification ([`Kraken2`](https://github.com/DerrickWood/kraken2))
 - Visualization ([`Krona`](https://github.com/marbl/Krona/wiki))
 
 ### Functional annotation
