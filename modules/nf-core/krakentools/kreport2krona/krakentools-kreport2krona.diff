@@ -1,0 +1,14 @@
+Changes in module 'nf-core/krakentools/kreport2krona'
+--- modules/nf-core/krakentools/kreport2krona/main.nf
++++ modules/nf-core/krakentools/kreport2krona/main.nf
+@@ -6,7 +6,7 @@
+     conda "${moduleDir}/environment.yml"
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+         'https://depot.galaxyproject.org/singularity/krakentools:1.2--pyh5e36f6f_0':
+-        'biocontainers/krakentools:1.2--pyh5e36f6f_0' }"
++        'quay.io/biocontainers/krakentools:1.2--pyh5e36f6f_0' }"
+ 
+     input:
+     tuple val(meta), path(kreport)
+
+************************************************************

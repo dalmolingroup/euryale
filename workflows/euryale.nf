@@ -74,9 +74,12 @@ def multiqc_report = []
 workflow EURYALE {
     if (params.reference_fasta == null && params.diamond_db == null) { exit 1, 'A reference fasta (--reference_fasta) or a DIAMOND db (--diamond_db) must be specified' }
     if (params.host_fasta == null && params.bowtie2_db == null) {exit 1, 'Either a host reference FASTA (--host_fasta) or a pre-built bowtie2 index (--bowtie2_db) must be specified'}
+    if (params.run_kaiju == true && params.kaiju_db == null) {exit 1, 'A Kaiju tar.gz database must be specified with --kaiju_db'}
+    if (params.run_kraken2 == true && params.kraken2_db == null) {exit 1, 'A Kraken2 database must be specified with --kraken2_db'}
 
     ch_versions = Channel.empty()
-    ch_kaiju_db = Channel.value([ [id: "kaiju_db"], file(params.kaiju_db)])
+    ch_kraken_db = params.run_kraken2 ? file(params.kraken2_db) : []
+    ch_kaiju_db = params.run_kaiju ? Channel.value([ [id: "kaiju_db"], file(params.kaiju_db)]) : []
     ch_reference_fasta = params.reference_fasta ? file(params.reference_fasta) : []
     ch_diamond_db = params.diamond_db ? file(params.diamond_db) : []
     ch_bowtie2_db = params.bowtie2_db ? Channel.value([ [id: "host_db"], file(params.bowtie2_db)]) : []
@@ -158,10 +161,11 @@ workflow EURYALE {
     if (!params.skip_classification) {
         TAXONOMY (
             clean_reads,
-            ch_kaiju_db
+            ch_kaiju_db,
+            ch_kraken_db
         )
         ch_versions = ch_versions.mix(TAXONOMY.out.versions)
-        ch_multiqc_files = ch_multiqc_files.mix(TAXONOMY.out.kaiju_report.collect{it[1]}.ifEmpty([]))
+        ch_multiqc_files = ch_multiqc_files.mix(TAXONOMY.out.tax_report.collect{it[1]}.ifEmpty([]))
     }
 
 

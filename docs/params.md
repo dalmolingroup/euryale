@@ -30,7 +30,8 @@ Choose to skip pipeline steps
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-----------|-----------|-----------|-----------|-----------|
-| `host_fasta` |  | `string` | None |  |  |
+| `host_fasta` | Host FASTA to use for decontamination | `string` |  |  |  |
+| `bowtie2_db` | Pre-built bowtie2 index. Directory where index is located. | `string` |  |  |  |
 
 ## Alignment
 
@@ -38,8 +39,8 @@ Choose to skip pipeline steps
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-----------|-----------|-----------|-----------|-----------|
-| `reference_fasta` | Path to FASTA genome file. | `string` | None |  |  |
-| `diamond_db` | Path to pre-built DIAMOND db. | `string` | None |  |  |
+| `reference_fasta` | Path to FASTA genome file. | `string` |  |  |  |
+| `diamond_db` | Path to pre-built DIAMOND db. | `string` |  |  |  |
 
 ## Taxonomy
 
@@ -47,7 +48,10 @@ Choose to skip pipeline steps
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-----------|-----------|-----------|-----------|-----------|
-| `kaiju_db` |  | `string` | None | True |  |
+| `kaiju_db` | Kaiju database | `string` |  | True |  |
+| `kraken2_db` | Kraken2 database | `string` |  |  |  |
+| `run_kaiju` | Run Kaiju classifier | `boolean` | True |  |  |
+| `run_kraken2` | Run Kraken2 classifier | `boolean` |  |  |  |
 
 ## Functional
 
@@ -55,7 +59,7 @@ Choose to skip pipeline steps
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-----------|-----------|-----------|-----------|-----------|
-| `id_mapping` | Path to ID mapping file to be used for the Functional annotation | `string` | None | True |  |
+| `id_mapping` | Path to ID mapping file to be used for the Functional annotation | `string` |  | True |  |
 | `minimum_bitscore` | Minimum bitscore of a match to be used for annotation | `integer` | 50 |  |  |
 | `minimum_pident` | Minimum identity of a match to be used for annotation | `integer` | 80 |  |  |
 | `minimum_alen` | Minimum alignment length of a match to be used for annotation | `integer` | 50 |  |  |
@@ -78,7 +82,7 @@ Reference genome related files and options required for the workflow.
 | `genome` | Name of iGenomes reference. <details><summary>Help</summary><small>If using a reference genome configured in the pipeline using iGenomes, use this parameter to give the ID for the reference. This is then used to build the full paths for all required reference genome files e.g. `--genome GRCh38`. <br><br>See the [nf-core website docs](https://nf-co.re/usage/reference_genomes) for more details.</small></details>| `string` |  |  |  |
 | `igenomes_base` | Directory / URL base for iGenomes references. | `string` | s3://ngi-igenomes/igenomes |  | True |
 | `igenomes_ignore` | Do not load the iGenomes reference config. <details><summary>Help</summary><small>Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`.</small></details>| `boolean` |  |  | True |
-| `fasta` |  | `string` | None |  |  |
+| `fasta` |  | `string` |  |  |  |
 
 ## Max job request options
 
@@ -110,9 +114,4 @@ Less common options for the pipeline, typically set in a config file.
 | `tracedir` | Directory to keep pipeline Nextflow logs and reports. | `string` | ${params.outdir}/pipeline_info |  | True |
 | `validate_params` | Boolean whether to validate parameters against the schema at runtime | `boolean` | True |  | True |
 | `show_hidden_params` | Show all params when using `--help` <details><summary>Help</summary><small>By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters.</small></details>| `boolean` |  |  | True |
-
-## Other parameters
-
-| Parameter | Description | Type | Default | Required | Hidden |
-|-----------|-----------|-----------|-----------|-----------|-----------|
-| `schema_ignore_params` |  | `string` | genomes |  |  |
+| `schema_ignore_params` |  | `string` | genomes |  | True |
