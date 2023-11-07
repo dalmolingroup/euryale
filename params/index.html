@@ -79,8 +79,6 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#generic-options">Generic options</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#other-parameters">Other parameters</a>
-    </li>
     </ul>
                   </li>
               </ul>
@@ -222,9 +220,17 @@
 <tbody>
 <tr>
 <td><code>host_fasta</code></td>
-<td></td>
+<td>Host FASTA to use for decontamination</td>
 <td><code>string</code></td>
-<td>None</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>bowtie2_db</code></td>
+<td>Pre-built bowtie2 index. Directory where index is located.</td>
+<td><code>string</code></td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -247,7 +253,7 @@
 <td><code>reference_fasta</code></td>
 <td>Path to FASTA genome file.</td>
 <td><code>string</code></td>
-<td>None</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -255,7 +261,7 @@
 <td><code>diamond_db</code></td>
 <td>Path to pre-built DIAMOND db.</td>
 <td><code>string</code></td>
-<td>None</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -276,10 +282,34 @@
 <tbody>
 <tr>
 <td><code>kaiju_db</code></td>
-<td></td>
+<td>Kaiju database</td>
 <td><code>string</code></td>
-<td>None</td>
+<td></td>
 <td>True</td>
+<td></td>
+</tr>
+<tr>
+<td><code>kraken2_db</code></td>
+<td>Kraken2 database</td>
+<td><code>string</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>run_kaiju</code></td>
+<td>Run Kaiju classifier</td>
+<td><code>boolean</code></td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>run_kraken2</code></td>
+<td>Run Kraken2 classifier</td>
+<td><code>boolean</code></td>
+<td></td>
+<td></td>
 <td></td>
 </tr>
 </tbody>
@@ -301,7 +331,7 @@
 <td><code>id_mapping</code></td>
 <td>Path to ID mapping file to be used for the Functional annotation</td>
 <td><code>string</code></td>
-<td>None</td>
+<td></td>
 <td>True</td>
 <td></td>
 </tr>
@@ -404,7 +434,7 @@
 <td><code>fasta</code></td>
 <td></td>
 <td><code>string</code></td>
-<td>None</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -576,28 +606,13 @@
 <td></td>
 <td>True</td>
 </tr>
-</tbody>
-</table>
-<h2 id="other-parameters">Other parameters</h2>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-<th>Type</th>
-<th>Default</th>
-<th>Required</th>
-<th>Hidden</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td><code>schema_ignore_params</code></td>
 <td></td>
 <td><code>string</code></td>
 <td>genomes</td>
 <td></td>
-<td></td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
