@@ -68,6 +68,18 @@
                         "installed_by": ["modules"],
                         "patch": "modules/nf-core/kaiju/kaiju2table/kaiju-kaiju2table.diff"
                     },
+                    "kraken2/kraken2": {
+                        "branch": "master",
+                        "git_sha": "8fc1d24c710ebe1d5de0f2447ec9439fd3d9d66a",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/kraken2/kraken2/kraken2-kraken2.diff"
+                    },
+                    "krakentools/kreport2krona": {
+                        "branch": "master",
+                        "git_sha": "8fc1d24c710ebe1d5de0f2447ec9439fd3d9d66a",
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/krakentools/kreport2krona/krakentools-kreport2krona.diff"
+                    },
                     "krona/ktimporttext": {
                         "branch": "master",
                         "git_sha": "c8e35eb2055c099720a75538d1b8adb3fb5a464c",

@@ -7,3 +7,4 @@ results/
 testing/
 testing*
 *.pyc
+test_data/kraken_viral_db/

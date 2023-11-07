@@ -36,7 +36,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 ### Taxonomic classification
 
 - Sequence classification ([`Kaiju`](https://github.com/bioinformatics-centre/kaiju/))
-- (**WIP**) Sequence classification ([`Kraken2`](https://github.com/DerrickWood/kraken2))
+- Sequence classification ([`Kraken2`](https://github.com/DerrickWood/kraken2))
 - Visualization ([`Krona`](https://github.com/marbl/Krona/wiki))
 
 ### Functional annotation

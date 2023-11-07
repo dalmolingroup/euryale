@@ -116,7 +116,24 @@
             "properties": {
                 "kaiju_db": {
                     "type": "string",
-                    "fa_icon": "fas fa-database"
+                    "fa_icon": "fas fa-database",
+                    "description": "Kaiju database"
+                },
+                "kraken2_db": {
+                    "type": "string",
+                    "fa_icon": "fas fa-database",
+                    "description": "Kraken2 database"
+                },
+                "run_kaiju": {
+                    "type": "boolean",
+                    "default": true,
+                    "fa_icon": "fas fa-bacterium",
+                    "description": "Run Kaiju classifier"
+                },
+                "run_kraken2": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-bacterium",
+                    "description": "Run Kraken2 classifier"
                 }
             },
             "required": ["kaiju_db"],
