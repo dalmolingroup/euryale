@@ -77,6 +77,36 @@ nextflow run dalmolingroup/euryale \
   -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 ```
 
+## Databases and references
+
+A question that pops up a lot is: Since Euryale requires a lot of reference parameters, where can I find these references?
+
+Below we provide a short list of places where you can find these databases.
+But, of course, we're not limited to these references: Euryale should be able to process your own databases, should you want to build them yourself.
+
+### Alignment
+
+For the alignment you can either provide `--diamond_db` for a pre-built DIAMOND database, or you can provide `--reference_fasta`.
+For reference fasta, by default Euryale expects something like [NCBI-nr](https://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/), but similarly formatted reference databases should also suffice.
+
+### Taxonomic classification
+
+At its current version, Euryale doesn't build a reference taxonomic database, but pre-built ones are supported.
+
+- If you're using Kaiju (the default), you can provide a reference database with `--kaiju_db` and provide a .tar.gz file like the ones provided in the [official Kaiju website](https://kaiju.binf.ku.dk/server).
+  We have extensively tested Euryale with the 2021 version of the nr database and it should work as expected.
+- If you're using Kraken2 (By supplying `--run_kraken2`), we expect something like the [pre-built .tar.gz databases provided by the Kraken2 developers](https://benlangmead.github.io/aws-indexes/k2) to be provided to `--kraken2_db`.
+
+### Functional annotation
+
+We expect an ID mapping reference to be used within annotate. Since we're already expecting by default the NCBI-nr to be used as the alignment reference, [the ID mapping data file provided by Uniprot](https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/) should work well when provided to `--id_mapping`.
+
+### Host reference
+
+If you're using metagenomic reads that come from a known host's microbiome, you can also provide the host's genome FASTA to `--host_fasta` parameter in order to enable our decontamination subworkflow.
+[Ensembl](https://www.ensembl.org/index.html) provides easy to download genomes that can be used for this purpose.
+Alternatively, you can provide a pre-built BowTie2 database directory to the `--bowtie2_db` parameter.
+
 ## Documentation
 
 The dalmolingroup/euryale documentation is split into the following pages:
