@@ -73,9 +73,9 @@ def multiqc_report = []
 
 workflow EURYALE {
     if (params.reference_fasta == null && params.diamond_db == null) { exit 1, 'A reference fasta (--reference_fasta) or a DIAMOND db (--diamond_db) must be specified' }
-    if (params.host_fasta == null && params.bowtie2_db == null) {exit 1, 'Either a host reference FASTA (--host_fasta) or a pre-built bowtie2 index (--bowtie2_db) must be specified'}
     if (params.run_kaiju == true && params.kaiju_db == null) {exit 1, 'A Kaiju tar.gz database must be specified with --kaiju_db'}
     if (params.run_kraken2 == true && params.kraken2_db == null) {exit 1, 'A Kraken2 database must be specified with --kraken2_db'}
+    if (params.host_fasta == null && params.bowtie2_db == null && params.skip_host_removal == false) {exit 1, 'Either a host reference FASTA (--host_fasta) or a pre-built bowtie2 index (--bowtie2_db) must be specified'}
 
     ch_versions = Channel.empty()
     ch_kraken_db = params.run_kraken2 ? file(params.kraken2_db) : []
@@ -96,19 +96,18 @@ workflow EURYALE {
     ch_versions = ch_versions.mix(INPUT_CHECK.out.versions)
     INPUT_CHECK.out.reads.set { reads }
 
-    PREPROCESS (
-        reads
-    )
-    ch_versions = ch_versions.mix(PREPROCESS.out.versions)
+    if (params.skip_preprocess) {
+        clean_reads = reads
+    } else {
+        PREPROCESS (
+            reads
+        )
+        ch_versions = ch_versions.mix(PREPROCESS.out.versions)
 
-    if (ch_host_reference) {
         PREPROCESS.out.reads
             .set { clean_reads }
-    } else {
-        PREPROCESS.out.merged_reads
-            .set { clean_reads }
+        ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
     }
-    ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
 
     if (ch_host_reference || ch_bowtie2_db) {
         HOST_REMOVAL (
@@ -132,7 +131,7 @@ workflow EURYALE {
         ch_versions = ch_versions.mix(ASSEMBLY.out.versions)
     }
 
-    if (!params.assembly_based) {
+    if (!params.assembly_based && !params.skip_preprocess) {
         GUNZIP (
             clean_reads
         )
