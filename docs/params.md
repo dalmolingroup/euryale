@@ -23,6 +23,7 @@ Choose to skip pipeline steps
 | `skip_classification` | Skip taxonomic classification | `boolean` |  |  |  |
 | `skip_alignment` | Skip alignment | `boolean` |  |  |  |
 | `skip_functional` | Skip functional annotation | `boolean` |  |  |  |
+| `skip_host_removal` | Skip host removal | `boolean` |  |  |  |
 
 ## Decontamination
 
