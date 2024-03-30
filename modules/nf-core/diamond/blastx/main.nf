@@ -60,7 +60,7 @@ process DIAMOND_BLASTX {
         --out ${prefix}.${out_ext} \\
         --log
 
-    mv diamond.log ${prefix}.log
+    mv diamond.log ${prefix}.diamond.log
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

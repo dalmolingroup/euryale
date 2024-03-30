@@ -8,5 +8,8 @@ report_section_order:
     order: -1001
   "dalmolingroup-euryale-summary":
     order: -1002
+sp:
+  diamond:
+    fn_re: ".*.diamond.log$"
 
 export_plots: true
