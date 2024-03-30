@@ -123,11 +123,9 @@ class RowChecker:
         """
         if len(self._seen) != len(self.modified):
             raise AssertionError("The pair of sample name and FASTQ must be unique.")
-        seen = Counter()
         for row in self.modified:
             sample = row[self._sample_col]
-            seen[sample] += 1
-            row[self._sample_col] = f"{sample}_T{seen[sample]}"
+            row[self._sample_col] = f"{sample}"
 
 
 def read_head(handle, num_lines=10):

@@ -154,7 +154,7 @@ workflow EURYALE {
         )
         ALIGNMENT.out.alignments.set{alignments}
         ch_versions = ch_versions.mix(ALIGNMENT.out.versions)
-        ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.multiqc_files.collect())
+        ch_multiqc_files = ch_multiqc_files.mix(ALIGNMENT.out.multiqc_files.collect{it[1]}.ifEmpty([]))
     }
 
     if (!params.skip_classification) {

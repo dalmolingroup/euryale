@@ -26,5 +26,14 @@ Changes in module 'nf-core/diamond/blastx'
      tuple val(meta), path('*.daa')  , optional: true, emit: daa
      tuple val(meta), path('*.sam')  , optional: true, emit: sam
      tuple val(meta), path('*.tsv')  , optional: true, emit: tsv
+@@ -58,7 +60,7 @@
+         --out ${prefix}.${out_ext} \\
+         --log
+ 
+-    mv diamond.log ${prefix}.log
++    mv diamond.log ${prefix}.diamond.log
+ 
+     cat <<-END_VERSIONS > versions.yml
+     "${task.process}":
 
 ************************************************************
