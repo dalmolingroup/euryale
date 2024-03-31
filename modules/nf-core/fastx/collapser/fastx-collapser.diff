@@ -1,0 +1,14 @@
+Changes in module 'nf-core/fastx/collapser'
+--- modules/nf-core/fastx/collapser/main.nf
++++ modules/nf-core/fastx/collapser/main.nf
+@@ -5,7 +5,7 @@
+     conda "${moduleDir}/environment.yml"
+     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+         'https://depot.galaxyproject.org/singularity/fastx_toolkit:0.0.14--hdbdd923_11':
+-        'biocontainers/fastx_toolkit:0.0.14--hdbdd923_11' }"
++        'quay.io/biocontainers/fastx_toolkit:0.0.14--hdbdd923_11' }"
+ 
+     input:
+     tuple val(meta), path(fastx)
+
+************************************************************

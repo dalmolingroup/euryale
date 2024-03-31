@@ -59,6 +59,14 @@
                             "modules"
                         ]
                     },
+                    "fastx/collapser": {
+                        "branch": "master",
+                        "git_sha": "210e7c8f33f8ca0e35e027aa8889d03205a57b88",
+                        "installed_by": [
+                            "modules"
+                        ],
+                        "patch": "modules/nf-core/fastx/collapser/fastx-collapser.diff"
+                    },
                     "gunzip": {
                         "branch": "master",
                         "git_sha": "5c460c5a4736974abde2843294f35307ee2b0e5e",
