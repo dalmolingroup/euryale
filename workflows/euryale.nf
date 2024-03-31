@@ -37,6 +37,7 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 // MODULES
 //
 include { FASTX_COLLAPSER } from '../modules/local/fastx_toolkit/collapser'
+include { MICROVIEW } from '../modules/local/microview.nf'
 
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
@@ -166,7 +167,6 @@ workflow EURYALE {
         ch_versions = ch_versions.mix(TAXONOMY.out.versions)
         ch_multiqc_files = ch_multiqc_files.mix(TAXONOMY.out.tax_report.collect{it[1]}.ifEmpty([]))
     }
-
 
     if (!params.skip_functional && !params.skip_alignment) {
         FUNCTIONAL (

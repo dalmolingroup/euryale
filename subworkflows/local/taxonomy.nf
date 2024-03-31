@@ -6,6 +6,8 @@ include { KAIJU_KAIJU2TABLE } from '../../modules/nf-core/kaiju/kaiju2table/main
 include { KAIJU_KAIJU2KRONA } from '../../modules/nf-core/kaiju/kaiju2krona/main'
 include { KRONA_KTIMPORTTEXT } from '../../modules/nf-core/krona/ktimporttext/main'
 
+include { MICROVIEW } from '../../modules/local/microview.nf'
+
 workflow TAXONOMY {
     take:
     reads
@@ -57,6 +59,13 @@ workflow TAXONOMY {
         ch_versions = ch_versions.mix(KRAKENTOOLS_KREPORT2KRONA.out.versions.first())
     }
 
+
+    if (!params.skip_microview) {
+        MICROVIEW (
+            tax_report.collect{it[1]}
+        )
+        ch_versions = ch_versions.mix(MICROVIEW.out.versions)
+    }
 
     KRONA_KTIMPORTTEXT (krona_input)
     ch_versions = ch_versions.mix(KRONA_KTIMPORTTEXT.out.versions)
