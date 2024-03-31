@@ -111,7 +111,7 @@ Less common options for the pipeline, typically set in a config file.
 | `monochrome_logs` | Do not use coloured log outputs. | `boolean` |  |  | True |
 | `hook_url` | Incoming hook URL for messaging service <details><summary>Help</summary><small>Incoming hook URL for messaging service. Currently, MS Teams and Slack are supported.</small></details>| `string` |  |  | True |
 | `multiqc_config` | Custom config file to supply to MultiQC. | `string` |  |  | True |
-| `multiqc_logo` | Custom logo file to supply to MultiQC. File name must also be set in the MultiQC config file | `string` | /home/jvfe/dev/pesquisa/dalmolingroup-euryale/assets/euryale_logo.png |  | True |
+| `multiqc_logo` | Custom logo file to supply to MultiQC. File name must also be set in the MultiQC config file | `string` |  |  | True |
 | `multiqc_methods_description` | Custom MultiQC yaml file containing HTML including a methods description. | `string` |  |  |  |
 | `tracedir` | Directory to keep pipeline Nextflow logs and reports. | `string` | ${params.outdir}/pipeline_info |  | True |
 | `validate_params` | Boolean whether to validate parameters against the schema at runtime | `boolean` | True |  | True |
