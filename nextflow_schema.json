@@ -79,6 +79,11 @@
                     "type": "boolean",
                     "fa_icon": "fas fa-glasses",
                     "description": "Skip MicroView report"
+                },
+                "skip_preprocess": {
+                    "type": "boolean",
+                    "description": "Skip Preprocessing steps",
+                    "fa_icon": "fas fa-cut"
                 }
             },
             "fa_icon": "fas fa-angle-double-right"

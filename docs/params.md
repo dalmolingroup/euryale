@@ -25,6 +25,7 @@ Choose to skip pipeline steps
 | `skip_functional` | Skip functional annotation | `boolean` |  |  |  |
 | `skip_host_removal` | Skip host removal | `boolean` |  |  |  |
 | `skip_microview` | Skip MicroView report | `boolean` |  |  |  |
+| `skip_preprocess` | Skip Preprocessing steps | `boolean` |  |  |  |
 
 ## Decontamination
 
