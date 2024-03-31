@@ -74,6 +74,11 @@
                     "type": "boolean",
                     "description": "Skip host removal",
                     "fa_icon": "fab fa-ioxhost"
+                },
+                "skip_microview": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-glasses",
+                    "description": "Skip MicroView report"
                 }
             },
             "fa_icon": "fas fa-angle-double-right"

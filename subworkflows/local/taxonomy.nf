@@ -6,6 +6,8 @@ include { KAIJU_KAIJU2TABLE } from '../../modules/nf-core/kaiju/kaiju2table/main
 include { KAIJU_KAIJU2KRONA } from '../../modules/nf-core/kaiju/kaiju2krona/main'
 include { KRONA_KTIMPORTTEXT } from '../../modules/nf-core/krona/ktimporttext/main'
 
+include { MICROVIEW } from '../../modules/local/microview.nf'
+
 workflow TAXONOMY {
     take:
     reads
@@ -14,6 +16,8 @@ workflow TAXONOMY {
 
     main:
 
+    tax_report = Channel.empty()
+    krona_input = Channel.empty()
     ch_versions = Channel.empty()
 
     if (params.run_kaiju) {
@@ -33,10 +37,10 @@ workflow TAXONOMY {
             "species"
         )
 
-        KAIJU_KAIJU2TABLE.out.summary.set { tax_report }
+        tax_report = tax_report.mix(KAIJU_KAIJU2TABLE.out.summary)
 
         KAIJU_KAIJU2KRONA (kaiju_out, kaiju_db_files)
-        KAIJU_KAIJU2KRONA.out.txt.set { krona_input }
+        krona_input = krona_input.mix(KAIJU_KAIJU2KRONA.out.txt)
         ch_versions = ch_versions.mix(KAIJU_KAIJU2KRONA.out.versions)
     }
 
@@ -47,16 +51,23 @@ workflow TAXONOMY {
             false,
             false
         )
-        KRAKEN2_KRAKEN2.out.report.set { tax_report }
+        tax_report = tax_report.mix(KRAKEN2_KRAKEN2.out.report)
         ch_versions = ch_versions.mix(KRAKEN2_KRAKEN2.out.versions.first())
 
         KRAKENTOOLS_KREPORT2KRONA (
-            tax_report
+            KRAKEN2_KRAKEN2.out.report
         )
-        KRAKENTOOLS_KREPORT2KRONA.out.txt.set { krona_input }
+        krona_input = krona_input.mix(KRAKENTOOLS_KREPORT2KRONA.out.txt)
         ch_versions = ch_versions.mix(KRAKENTOOLS_KREPORT2KRONA.out.versions.first())
     }
 
+
+    if (!params.skip_microview) {
+        MICROVIEW (
+            tax_report.collect{it[1]}
+        )
+        ch_versions = ch_versions.mix(MICROVIEW.out.versions)
+    }
 
     KRONA_KTIMPORTTEXT (krona_input)
     ch_versions = ch_versions.mix(KRONA_KTIMPORTTEXT.out.versions)
