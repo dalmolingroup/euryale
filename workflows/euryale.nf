@@ -37,7 +37,6 @@ ch_multiqc_custom_methods_description = params.multiqc_methods_description ? fil
 // MODULES
 //
 include { FASTX_COLLAPSER } from '../modules/local/fastx_toolkit/collapser'
-include { MICROVIEW } from '../modules/local/microview.nf'
 
 //
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
