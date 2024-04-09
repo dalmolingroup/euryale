@@ -62,7 +62,7 @@ Choose to skip pipeline steps
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-----------|-----------|-----------|-----------|-----------|
-| `id_mapping` | Path to ID mapping file to be used for the Functional annotation | `string` |  | True |  |
+| `id_mapping` | Path to ID mapping file to be used for the Functional annotation | `string` |  |  |  |
 | `minimum_bitscore` | Minimum bitscore of a match to be used for annotation | `integer` | 50 |  |  |
 | `minimum_pident` | Minimum identity of a match to be used for annotation | `integer` | 80 |  |  |
 | `minimum_alen` | Minimum alignment length of a match to be used for annotation | `integer` | 50 |  |  |

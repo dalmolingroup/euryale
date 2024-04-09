@@ -190,9 +190,6 @@
                     "description": "Maximum evalue of a match to be used for annotation"
                 }
             },
-            "required": [
-                "id_mapping"
-            ],
             "fa_icon": "fas fa-gavel"
         },
         "assembly": {
