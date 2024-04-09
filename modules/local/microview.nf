@@ -2,9 +2,10 @@ process MICROVIEW {
     tag 'report'
     label 'process_low'
 
+    conda "bioconda::microview=0.10.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker://docker.io/jvfe/microview:v0.10.0':
-        'docker.io/jvfe/microview:v0.10.0' }"
+        'docker://docker.io/jvfe/microview:v0.10.1':
+        'docker.io/jvfe/microview:v0.10.1' }"
 
     input:
     path reports
