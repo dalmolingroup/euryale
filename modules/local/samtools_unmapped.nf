@@ -19,9 +19,9 @@ process SAMTOOLS_UNMAPPED_PAIRS {
     script:
     def args = task.ext.args ?: ''
     prefix = task.ext.prefix ?: "${meta.id}"
-
+    def format = meta.single_end ? "4" : "12"
     """
-     samtools view -b -f 12 -F 256 \\
+     samtools view -b -f $format -F 256 \\
         $input \\
         > ${prefix}.bam
 
