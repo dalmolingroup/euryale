@@ -4,14 +4,15 @@ process MICROVIEW {
 
     conda "bioconda::microview=0.10.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'docker://docker.io/jvfe/microview:v0.10.1':
-        'docker.io/jvfe/microview:v0.10.1' }"
+        'docker://docker.io/jvfe/microview:v0.11.0':
+        'docker.io/jvfe/microview:v0.11.0' }"
 
     input:
     path reports
 
     output:
     path "microview_report.html", emit: report
+    path "microview_tables"     , emit: tables
     path "versions.yml"         , emit: versions
 
     when:
@@ -35,6 +36,7 @@ process MICROVIEW {
 
     """
     touch microview_report.html
+    mkdir microview_tables
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
