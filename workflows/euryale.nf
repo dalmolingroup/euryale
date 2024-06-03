@@ -13,9 +13,6 @@ WorkflowEuryale.initialise(params, log)
 def checkPathParamList = [ params.input, params.multiqc_config, params.kaiju_db ]
 for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 
-// Check mandatory parameters
-if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     CONFIG FILES
@@ -72,6 +69,8 @@ include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoft
 def multiqc_report = []
 
 workflow EURYALE {
+    // Check mandatory parameters
+    if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
     if (params.reference_fasta == null && params.diamond_db == null && params.skip_alignment == false) { exit 1, 'A reference fasta (--reference_fasta) or a DIAMOND db (--diamond_db) must be specified' }
     if (params.run_kaiju == true && params.kaiju_db == null && params.skip_classification == false) {exit 1, 'A Kaiju tar.gz database must be specified with --kaiju_db'}
     if (params.run_kraken2 == true && params.kraken2_db == null && params.skip_classification == false) {exit 1, 'A Kraken2 database must be specified with --kraken2_db'}
