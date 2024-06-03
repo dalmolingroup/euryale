@@ -237,6 +237,58 @@
                 }
             }
         },
+        "download_entry": {
+            "title": "Download Entry",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "download_functional": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to dowload functional references"
+                },
+                "download_kaiju": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to dowload the Kaiju reference db"
+                },
+                "download_kraken": {
+                    "type": "boolean",
+                    "description": "Whether to dowload the Kraken2 reference db"
+                },
+                "download_host": {
+                    "type": "boolean",
+                    "description": "Whether to download the host reference genome"
+                },
+                "functional_db": {
+                    "type": "string",
+                    "default": "https://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz",
+                    "description": "Functional reference URL (download entry)"
+                },
+                "functional_dictionary": {
+                    "type": "string",
+                    "default": "https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping.dat.gz",
+                    "description": "Functional dictionary URL (download entry)"
+                },
+                "kaiju_db_url": {
+                    "type": "string",
+                    "default": "https://kaiju-idx.s3.eu-central-1.amazonaws.com/2023/kaiju_db_nr_2023-05-10.tgz",
+                    "description": "Kaiju reference URL (download entry)"
+                },
+                "kraken2_db_url": {
+                    "type": "string",
+                    "default": "https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20240112.tar.gz",
+                    "description": "Kraken2 reference URL (download entry)"
+                },
+                "host_url": {
+                    "type": "string",
+                    "default": "http://ftp.ensembl.org/pub/release-112/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz",
+                    "description": "Host FASTA reference URL (download entry)"
+                }
+            },
+            "fa_icon": "fas fa-database"
+        },
         "max_job_request_options": {
             "title": "Max job request options",
             "type": "object",
@@ -352,7 +404,8 @@
                     "type": "string",
                     "description": "Custom logo file to supply to MultiQC. File name must also be set in the MultiQC config file",
                     "fa_icon": "fas fa-image",
-                    "hidden": true
+                    "hidden": true,
+                    "default": "/home/jvfe/dev/pesquisa/dalmolingroup-euryale/assets/euryale_logo.png"
                 },
                 "multiqc_methods_description": {
                     "type": "string",
@@ -362,7 +415,7 @@
                 "tracedir": {
                     "type": "string",
                     "description": "Directory to keep pipeline Nextflow logs and reports.",
-                    "default": "${params.outdir}/pipeline_info",
+                    "default": "null/pipeline_info",
                     "fa_icon": "fas fa-cogs",
                     "hidden": true
                 },
@@ -412,6 +465,9 @@
         },
         {
             "$ref": "#/definitions/reference_genome_options"
+        },
+        {
+            "$ref": "#/definitions/download_entry"
         },
         {
             "$ref": "#/definitions/max_job_request_options"
