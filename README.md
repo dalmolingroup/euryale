@@ -70,7 +70,6 @@ nextflow run dalmolingroup/euryale \
   --input samplesheet.csv \
   --outdir <OUTDIR> \
   --kaiju_db kaiju_reference \
-  --diamond_db diamond_db \
   --reference_fasta diamond_fasta \
   --host_fasta host_reference_fasta \
   --id_mapping id_mapping_file \
@@ -80,6 +79,26 @@ nextflow run dalmolingroup/euryale \
 ## Databases and references
 
 A question that pops up a lot is: Since Euryale requires a lot of reference parameters, where can I find these references?
+
+One option is to execute EURYALE's download entry, which will download the necessary databases for you.
+This is the recommended way to get started with the pipeline.
+This uses the same sources as EURYALE's predecessor MEDUSA.
+
+```bash
+nextflow run dalmolingroup/euryale \
+	--download_functional \
+  --download_kaiju \
+  --download_host \
+  --outdir <output directory> \
+  -entry download \
+  -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
+```
+In case you download the Kraken2 database (`--download_kraken`), make sure to extract it using the following command before using
+it in the pipeline:
+
+```bash
+tar -xvf kraken2_db.tar.gz
+```
 
 Below we provide a short list of places where you can find these databases.
 But, of course, we're not limited to these references: Euryale should be able to process your own databases, should you want to build them yourself.
