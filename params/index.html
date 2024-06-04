@@ -75,6 +75,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#reference-genome-options">Reference genome options</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#download-entry">Download Entry</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#max-job-request-options">Max job request options</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#generic-options">Generic options</a>
@@ -459,6 +461,93 @@
 <td></td>
 <td><code>string</code></td>
 <td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="download-entry">Download Entry</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+<th>Type</th>
+<th>Default</th>
+<th>Required</th>
+<th>Hidden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>download_functional</code></td>
+<td>Whether to dowload functional references</td>
+<td><code>boolean</code></td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>download_kaiju</code></td>
+<td>Whether to dowload the Kaiju reference db</td>
+<td><code>boolean</code></td>
+<td>True</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>download_kraken</code></td>
+<td>Whether to dowload the Kraken2 reference db</td>
+<td><code>boolean</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>download_host</code></td>
+<td>Whether to download the host reference genome</td>
+<td><code>boolean</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>functional_db</code></td>
+<td>Functional reference URL (download entry)</td>
+<td><code>string</code></td>
+<td>https://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>functional_dictionary</code></td>
+<td>Functional dictionary URL (download entry)</td>
+<td><code>string</code></td>
+<td>https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping.dat.gz</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>kaiju_db_url</code></td>
+<td>Kaiju reference URL (download entry)</td>
+<td><code>string</code></td>
+<td>https://kaiju-idx.s3.eu-central-1.amazonaws.com/2023/kaiju_db_nr_2023-05-10.tgz</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>kraken2_db_url</code></td>
+<td>Kraken2 reference URL (download entry)</td>
+<td><code>string</code></td>
+<td>https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20240112.tar.gz</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>host_url</code></td>
+<td>Host FASTA reference URL (download entry)</td>
+<td><code>string</code></td>
+<td>http://ftp.ensembl.org/pub/release-112/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz</td>
 <td></td>
 <td></td>
 </tr>
