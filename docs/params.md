@@ -87,6 +87,22 @@ Reference genome related files and options required for the workflow.
 | `igenomes_ignore` | Do not load the iGenomes reference config. <details><summary>Help</summary><small>Do not load `igenomes.config` when running the pipeline. You may choose this option if you observe clashes between custom parameters and those supplied in `igenomes.config`.</small></details>| `boolean` |  |  | True |
 | `fasta` |  | `string` |  |  |  |
 
+## Download Entry
+
+
+
+| Parameter | Description | Type | Default | Required | Hidden |
+|-----------|-----------|-----------|-----------|-----------|-----------|
+| `download_functional` | Whether to dowload functional references | `boolean` | True |  |  |
+| `download_kaiju` | Whether to dowload the Kaiju reference db | `boolean` | True |  |  |
+| `download_kraken` | Whether to dowload the Kraken2 reference db | `boolean` |  |  |  |
+| `download_host` | Whether to download the host reference genome | `boolean` |  |  |  |
+| `functional_db` | Functional reference URL (download entry) | `string` | https://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz |  |  |
+| `functional_dictionary` | Functional dictionary URL (download entry) | `string` | https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping.dat.gz |  |  |
+| `kaiju_db_url` | Kaiju reference URL (download entry) | `string` | https://kaiju-idx.s3.eu-central-1.amazonaws.com/2023/kaiju_db_nr_2023-05-10.tgz |  |  |
+| `kraken2_db_url` | Kraken2 reference URL (download entry) | `string` | https://genome-idx.s3.amazonaws.com/kraken/k2_standard_08gb_20240112.tar.gz |  |  |
+| `host_url` | Host FASTA reference URL (download entry) | `string` | http://ftp.ensembl.org/pub/release-112/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz |  |  |
+
 ## Max job request options
 
 Set the top limit for requested resources for any single job.

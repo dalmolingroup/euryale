@@ -32,12 +32,10 @@ WorkflowMain.initialise(workflow, params, log)
 */
 
 include { EURYALE } from './workflows/euryale'
+include { DOWNLOAD } from './workflows/download'
 
-//
-// WORKFLOW: Run main dalmolingroup/euryale analysis pipeline
-//
-workflow DALMOLINGROUP_EURYALE {
-    EURYALE ()
+workflow download {
+    DOWNLOAD ()
 }
 
 /*
@@ -51,7 +49,7 @@ workflow DALMOLINGROUP_EURYALE {
 // See: https://github.com/nf-core/rnaseq/issues/619
 //
 workflow {
-    DALMOLINGROUP_EURYALE ()
+    EURYALE ()
 }
 
 /*
