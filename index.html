@@ -153,7 +153,6 @@
   --input samplesheet.csv \
   --outdir &lt;OUTDIR&gt; \
   --kaiju_db kaiju_reference \
-  --diamond_db diamond_db \
   --reference_fasta diamond_fasta \
   --host_fasta host_reference_fasta \
   --id_mapping id_mapping_file \
@@ -161,6 +160,21 @@
 </code></pre>
 <h2 id="databases-and-references">Databases and references</h2>
 <p>A question that pops up a lot is: Since Euryale requires a lot of reference parameters, where can I find these references?</p>
+<p>One option is to execute EURYALE's download entry, which will download the necessary databases for you.
+This is the recommended way to get started with the pipeline.
+This uses the same sources as EURYALE's predecessor MEDUSA.</p>
+<pre><code class="language-bash">nextflow run dalmolingroup/euryale \
+    --download_functional \
+  --download_kaiju \
+  --download_host \
+  --outdir &lt;output directory&gt; \
+  -entry download \
+  -profile &lt;docker/singularity/podman/shifter/charliecloud/conda/institute&gt;
+</code></pre>
+<p>In case you download the Kraken2 database (<code>--download_kraken</code>), make sure to extract it using the following command before using
+it in the pipeline:</p>
+<pre><code class="language-bash">tar -xvf kraken2_db.tar.gz
+</code></pre>
 <p>Below we provide a short list of places where you can find these databases.
 But, of course, we're not limited to these references: Euryale should be able to process your own databases, should you want to build them yourself.</p>
 <h3 id="alignment">Alignment</h3>
@@ -266,5 +280,5 @@ Front. Genet. 13:814437. doi: 10.3389/fgene.2022.814437</p>
 
 <!--
 MkDocs version : 1.6.0
-Build Date UTC : 2024-06-04 14:08:04.296245+00:00
+Build Date UTC : 2024-06-04 15:45:33.520725+00:00
 -->
