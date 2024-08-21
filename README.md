@@ -93,6 +93,7 @@ nextflow run dalmolingroup/euryale \
   -entry download \
   -profile <docker/singularity/podman/shifter/charliecloud/conda/institute>
 ```
+Check out the full documentation for a full list of [EURYALE's download parameters](https://dalmolingroup.github.io/euryale/params/#download-entry).
 In case you download the Kraken2 database (`--download_kraken`), make sure to extract it using the following command before using
 it in the pipeline:
 
