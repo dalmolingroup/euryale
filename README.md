@@ -149,10 +149,9 @@ We thank the following people for their extensive assistance in the development 
 
 ## Citations
 
-> Morais DAA, Cavalcante JVF, Monteiro SS, Pasquali MAB and Dalmolin RJS (2022)
-> MEDUSA: A Pipeline for Sensitive Taxonomic Classification and Flexible Functional Annotation
-> of Metagenomic Shotgun Sequences.
-> Front. Genet. 13:814437. doi: 10.3389/fgene.2022.814437
+> J. V. F. Cavalcante, I. Dantas de Souza, D. A. A. Morais and R. J. S. Dalmolin, "EURYALE: A versatile Nextflow pipeline for taxonomic classification and functional annotation of metagenomics data,"
+> 2024 IEEE Conference on Computational Intelligence in Bioinformatics and Computational Biology (CIBCB), Natal, Brazil, 2024, pp. 1-7,
+> doi: 10.1109/CIBCB58642.2024.10702116.
 
 This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).
 
