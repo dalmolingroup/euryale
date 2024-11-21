@@ -1,0 +1,54 @@
+nextflow_workflow {
+
+    name "Test FUNCTIONAL workflow"
+    script "subworkflows/local/functional.nf"
+    workflow "FUNCTIONAL"
+    tag "FUNCTIONAL"
+    tag "subworkflows"
+
+    test("Should run functional annotation workflow") {
+
+        when {
+            workflow {
+                """
+                input[0] = [
+                    [ id:'test_sample' ],
+                    file("$baseDir/test_data/test_minigut_sample2.txt.gz")
+                ]
+                input[1] = file("$baseDir/test_data/idmapping_selected.tab.example.gz")
+                """
+            }
+            params {
+                minimum_bitscore = 50
+                minimum_pident = 90
+                minimum_alen = 100
+                maximum_evalue = 1e-5
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.annotated },
+            )
+
+            // Check GUNZIP output
+            with(workflow.out.annotated) {
+                assert size() == 1
+                with(get(0)) {
+                    assert get(0).id == "test_sample"
+                }
+            }
+
+            // Check ANNOTATE output
+            with(workflow.out.annotated) {
+                assert size() == 1
+                with(get(0)) {
+                    assert get(0).id == "test_sample"
+                    assert get(1).readLines().size() > 0
+                    // You might want to add more specific checks on the content of the annotated file
+                }
+            }
+        }
+    }
+}

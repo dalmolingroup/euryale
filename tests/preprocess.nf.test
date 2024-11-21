@@ -1,0 +1,60 @@
+nextflow_workflow {
+
+    name "Test PREPROCESS workflow"
+    script "subworkflows/local/preprocess.nf"
+    workflow "PREPROCESS"
+    tag "PREPROCESS"
+    tag "subworkflows"
+
+    test("Should run preprocessing with paired-end reads") {
+
+        when {
+            workflow {
+                """
+                input[0] = [
+                    [ id:'test_sample', single_end:false ], // meta map
+                    [
+                        "https://raw.githubusercontent.com/nf-core/test-datasets/mag/test_data/test_minigut_R1.fastq.gz",
+                        "https://raw.githubusercontent.com/nf-core/test-datasets/mag/test_data/test_minigut_R2.fastq.gz"
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.reads },
+                { assert workflow.out.merged_reads },
+                { assert workflow.out.multiqc_files },
+                { assert workflow.out.versions }
+            )
+
+            // Check FASTP output
+            with(workflow.out.reads) {
+                assert size() == 1
+                with(get(0)) {
+                    assert get(0).id == "test_sample"
+                    assert get(0).single_end == false
+                    assert get(1).size() == 2  // Two fastq files for paired-end
+                }
+            }
+
+            // Check merged reads
+            with(workflow.out.merged_reads) {
+                assert size() == 1
+                with(get(0)) {
+                    assert get(0).id == "test_sample"
+                    assert get(0).single_end == true
+                }
+            }
+
+            // Check versions
+            with(workflow.out.versions) {
+                assert size() == 3
+                assert path(get(0)).text.contains("FASTP")
+            }
+        }
+    }
+}

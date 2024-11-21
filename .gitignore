@@ -8,3 +8,8 @@ testing/
 testing*
 *.pyc
 test_data/kraken_viral_db/
+.nf-test
+nf-test
+.nf-test.log
+test.nf
+site
