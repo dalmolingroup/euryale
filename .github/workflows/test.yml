@@ -39,4 +39,4 @@ jobs:
           sudo mv nf-test /usr/local/bin/
 
       - name: Run nf-test
-        run: nf-test test --profile=${{ matrix.profile }} tests/**/**/*nf.test
+        run: nf-test test --profile=${{ matrix.profile }} tests/*nf.test
