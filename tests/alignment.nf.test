@@ -1,0 +1,57 @@
+nextflow_workflow {
+
+    name "Test ALIGNMENT workflow"
+    script "subworkflows/local/alignment.nf"
+    workflow "ALIGNMENT"
+    tag "ALIGNMENT"
+    tag "subworkflows"
+
+    test("Should run alignment with DIAMOND_MAKEDB and DIAMOND_BLASTX") {
+
+        when {
+            workflow {
+                """
+                input[0] = [[id:'MEGAHIT-test_minigut'], "$baseDir/test_data/MEGAHIT-test_minigut.contigs.fa.gz"]
+                input[1] = Channel.fromPath("$baseDir/test_data/protein.faa.gz")
+                input[2] = []
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.trace.succeeded().size() == 2 },
+                { assert workflow.out.alignments },
+                { assert workflow.out.multiqc_files },
+                { assert workflow.out.versions },
+                { assert path(workflow.out.alignments[0][1]).exists() },
+            )
+
+        }
+    }
+
+    test("Should run alignment with pre-built DIAMOND database") {
+
+        when {
+            workflow {
+                """
+                input[0] = [[id:'minigut'], '$baseDir/test_data/MEGAHIT-test_minigut.contigs.fa.gz']
+                input[1] = Channel.fromPath("$baseDir/test_data/protein.faa.gz")
+                input[2] = Channel.fromPath("$baseDir/test_data/protein.faa.gz.dmnd")
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.trace.succeeded().size() == 1 },
+                { assert workflow.out.alignments },
+                { assert workflow.out.multiqc_files },
+                { assert workflow.out.versions },
+                { assert path(workflow.out.alignments[0][1]).exists() },
+            )
+        }
+    }
+}
