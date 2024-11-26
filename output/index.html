@@ -54,9 +54,11 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#pipeline-overview">Pipeline overview</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#kaiju">Kaiju</a>
+    <li class="toctree-l3"><a class="reference internal" href="#kaiju-and-kraken2">Kaiju and Kraken2</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#krona">Krona</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#microview">MicroView</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#diamond">Diamond</a>
     </li>
@@ -114,42 +116,55 @@
 <h2 id="introduction">Introduction</h2>
 <p>This document describes the output produced by the pipeline. Most of the plots are taken from the MultiQC report, which summarises results at the end of the pipeline.</p>
 <p>The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.</p>
-<!-- TODO nf-core: Write this documentation describing your workflow's output -->
-
 <h2 id="pipeline-overview">Pipeline overview</h2>
 <p>The pipeline is built using <a href="https://www.nextflow.io/">Nextflow</a> and processes data using the following steps (steps in <strong>italics</strong> don't run by default):</p>
 <ul>
-<li><a href="#kaiju">Kaiju</a> - Taxonomically classify reads or contigs</li>
+<li><a href="#kaiju">Kaiju</a> and/or <em>Kraken2</em> - Taxonomically classify reads or contigs</li>
 <li><a href="#krona">Krona</a> - Visualize the taxonomic classification for each sample.</li>
+<li><a href="#microview">MicroView</a> - Visualize the taxonomic diversity for each sample.</li>
 <li><a href="#diamond">Diamond</a> - Alignment reads and contigs against a reference database (such as NCBI-nr).</li>
 <li><a href="#annotate">Annotate</a> - Functional annotation of alignment matches.</li>
-<li><a href="#megahit">MEGAHIT</a> - Assembled contigs.</li>
+<li><a href="#megahit"><em>MEGAHIT</em></a> - Assembled contigs.</li>
 <li><a href="#multiqc">MultiQC</a> - Aggregate report describing results and QC from the whole pipeline</li>
 <li><a href="#pipeline-information">Pipeline information</a> - Report metrics generated during the workflow execution</li>
 </ul>
-<h3 id="kaiju">Kaiju</h3>
+<h3 id="kaiju-and-kraken2">Kaiju and Kraken2</h3>
 <details markdown="1">
 <summary>Output files</summary>
 
-- `taxonomy/`
-  - `${sample}.tsv`: Kaiju classification output.
+- `taxonomy/${sample}/`
+  - `${sample}.tsv`: Classification output.
   - `${sample}.txt`: Kaiju2Table TSV output.
 
 </details>
 
 <p><a href="https://github.com/bioinformatics-centre/kaiju/">Kaiju</a> is a
 software to perform fast taxonomic classification of metagenomic sequencing reads using a protein reference database.</p>
+<p><a href="https://github.com/DerrickWood/kraken2">Kraken2</a> is the second version of the Kraken taxonomic sequence classification system.</p>
 <h3 id="krona">Krona</h3>
 <details markdown="1">
 <summary>Output files</summary>
 
-- `taxonomy/`
+- `taxonomy/${sample}/`
   - `${sample}.html`: Krona visualization for the sample.
 
 </details>
 
 <ul>
 <li><a href="https://github.com/marbl/Krona/">Krona</a> is a tool to interactively explore metagenomes and more from a web browser.</li>
+</ul>
+<h3 id="microview">MicroView</h3>
+<details markdown="1">
+<summary>Output files</summary>
+
+- `taxonomy/microview/`
+  - `microview_report.html`: MicroView report for all samples.
+  - `microview_tables/`: Tables used for the MicroView visualizations.
+
+</details>
+
+<ul>
+<li><a href="https://github.com/dalmolingroup/microview">MicroView</a> is a reporting tool for aggregating results from taxonomic classification analyses.</li>
 </ul>
 <h3 id="diamond">Diamond</h3>
 <details markdown="1">
