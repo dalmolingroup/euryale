@@ -1,10 +1,8 @@
 # dalmolingroup/euryale: Usage
 
-> _Documentation of pipeline parameters is generated automatically from the pipeline schema and can no longer be found in markdown files._
+> _Documentation of pipeline parameters is generated automatically from the pipeline schema and can be found in the reference section_
 
 ## Introduction
-
-<!-- TODO nf-core: Add documentation about anything specific to running your pipeline. For general topics, please point to (and add to) the main nf-core website. -->
 
 ## Samplesheet input
 
@@ -36,10 +34,6 @@ sample,fastq_1,fastq_2
 CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
 CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
 CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
-TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
-TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
 ```
 
 | Column    | Description                                                                                                                                                                            |
@@ -55,7 +49,7 @@ An [example samplesheet](https://github.com/dalmolingroup/euryale/blob/main/test
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run dalmolingroup/euryale --input samplesheet.csv --outdir <OUTDIR> --genome GRCh37 -profile docker
+nextflow run dalmolingroup/euryale --input samplesheet.csv --outdir <OUTDIR> -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -104,7 +98,7 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
 
 - `test`
   - A profile with a complete configuration for automated testing
-  - Includes links to test data so needs no other parameters
+  - Includes links to test data so needs no other parameters other than `--outdir`
 - `docker`
   - A generic configuration profile to be used with [Docker](https://docker.com/)
 - `singularity`
@@ -134,14 +128,14 @@ Specify the path to a specific config file (this is a core Nextflow command). Se
 
 Whilst the default requirements set within the pipeline will hopefully work for most people and with most input data, you may find that you want to customise the compute resources that the pipeline requests. Each step in the pipeline has a default set of requirements for number of CPUs, memory and time. For most of the steps in the pipeline, if the job exits with any of the error codes specified [here](https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/conf/base.config#L18) it will automatically be resubmitted with higher requests (2 x original, then 3 x original). If it still fails after the third attempt then the pipeline execution is stopped.
 
-For example, if the nf-core/rnaseq pipeline is failing after multiple re-submissions of the `STAR_ALIGN` process due to an exit code of `137` this would indicate that there is an out of memory issue:
+For example, if the pipeline is failing after multiple re-submissions of the `DIAMOND_BLASTX` process due to an exit code of `137` this would indicate that there is an out of memory issue:
 
 ```console
-[62/149eb0] NOTE: Process `NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (WT_REP1)` terminated with an error exit status (137) -- Execution is retried (1)
-Error executing process > 'NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (WT_REP1)'
+[62/149eb0] NOTE: Process `EURYALE:ALIGNMENT:DIAMOND_BLASTX (WT_REP1)` terminated with an error exit status (137) -- Execution is retried (1)
+Error executing process > 'EURYALE:ALIGNMENT:DIAMOND_BLASTX (WT_REP1)'
 
 Caused by:
-    Process `NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN (WT_REP1)` terminated with an error exit status (137)
+    Process `EURYALE:ALIGNMENT:DIAMOND_BLASTX  (WT_REP1)` terminated with an error exit status (137)
 
 Command executed:
     STAR \
@@ -158,7 +152,7 @@ Command output:
     (empty)
 
 Command error:
-    .command.sh: line 9:  30 Killed    STAR --genomeDir star --readFilesIn WT_REP1_trimmed.fq.gz --runThreadN 2 --outFileNamePrefix WT_REP1. <TRUNCATED>
+    .command.sh: line 9:  30 Killed
 Work dir:
     /home/pipelinetest/work/9d/172ca5881234073e8d76f2a19c88fb
 
@@ -171,40 +165,42 @@ A first step to bypass this error, you could try to increase the amount of CPUs,
 
 #### Advanced option on process level
 
-To bypass this error you would need to find exactly which resources are set by the `STAR_ALIGN` process. The quickest way is to search for `process STAR_ALIGN` in the [nf-core/rnaseq Github repo](https://github.com/nf-core/rnaseq/search?q=process+STAR_ALIGN).
-We have standardised the structure of Nextflow DSL2 pipelines such that all module files will be present in the `modules/` directory and so, based on the search results, the file we want is `modules/nf-core/star/align/main.nf`.
-If you click on the link to that file you will notice that there is a `label` directive at the top of the module that is set to [`label process_high`](https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/modules/nf-core/software/star/align/main.nf#L9).
+To bypass this error you would need to find exactly which resources are set by the `DIAMOND_BLASTX` process. The quickest way is to search for `process DIAMOND_BLASTX` in the [dalmolingroup/euryale Github repo](https://github.com/dalmolingroup/euryale/search?q=process+DIAMOND_BLASTX).
+We have standardised the structure of Nextflow DSL2 pipelines such that all module files will be present in the `modules/` directory and so, based on the search results, the file we want is `modules/nf-core/diamond/blastx/main.nf`.
+If you click on the link to that file you will notice that there is a `label` directive at the top of the module that is set to [`label process_high`](https://github.com/dalmolingroup/euryale/blob/ac25e5537dcb2428127123ea4fe106d8821bdde8/modules/nf-core/diamond/blastx/main.nf#L3).
 The [Nextflow `label`](https://www.nextflow.io/docs/latest/process.html#label) directive allows us to organise workflow processes in separate groups which can be referenced in a configuration file to select and configure subset of processes having similar computing requirements.
-The default values for the `process_high` label are set in the pipeline's [`base.config`](https://github.com/nf-core/rnaseq/blob/4c27ef5610c87db00c3c5a3eed10b1d161abf575/conf/base.config#L33-L37) which in this case is defined as 72GB.
-Providing you haven't set any other standard nf-core parameters to **cap** the [maximum resources](https://nf-co.re/usage/configuration#max-resources) used by the pipeline then we can try and bypass the `STAR_ALIGN` process failure by creating a custom config file that sets at least 72GB of memory, in this case increased to 100GB.
+The default values for the `process_high` label are set in the pipeline's [`base.config`](https://github.com/dalmolingroup/euryale/blob/ac25e5537dcb2428127123ea4fe106d8821bdde8/conf/base.config) which in this case is defined as 72GB.
+Providing you haven't set any other standard nf-core parameters to **cap** the [maximum resources](https://nf-co.re/usage/configuration#max-resources) used by the pipeline then we can try and bypass the `DIAMOND_BLASTX` process failure by creating a custom config file that sets at least 72GB of memory, in this case increased to 300GB.
 The custom config below can then be provided to the pipeline via the [`-c`](#-c) parameter as highlighted in previous sections.
 
 ```nextflow
 process {
-    withName: 'NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN' {
-        memory = 100.GB
+    withName: 'EURYALE:ALIGNMENT:DIAMOND_BLASTX' {
+        memory = 300.GB
     }
 }
 ```
 
-> **NB:** We specify the full process name i.e. `NFCORE_RNASEQ:RNASEQ:ALIGN_STAR:STAR_ALIGN` in the config file because this takes priority over the short name (`STAR_ALIGN`) and allows existing configuration using the full process name to be correctly overridden.
+> **NB:** We specify the full process name i.e. `EURYALE:ALIGNMENT:DIAMOND_BLASTX` in the config file because this takes priority over the short name (`DIAMOND_BLASTX`) and allows existing configuration using the full process name to be correctly overridden.
 >
 > If you get a warning suggesting that the process selector isn't recognised check that the process name has been specified correctly.
 
 ### Updating containers (advanced users)
 
-The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. If for some reason you need to use a different version of a particular tool with the pipeline then you just need to identify the `process` name and override the Nextflow `container` definition for that process using the `withName` declaration. For example, in the [nf-core/viralrecon](https://nf-co.re/viralrecon) pipeline a tool called [Pangolin](https://github.com/cov-lineages/pangolin) has been used during the COVID-19 pandemic to assign lineages to SARS-CoV-2 genome sequenced samples. Given that the lineage assignments change quite frequently it doesn't make sense to re-release the nf-core/viralrecon everytime a new version of Pangolin has been released. However, you can override the default container used by the pipeline by creating a custom config file and passing it as a command-line argument via `-c custom.config`.
+The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies. If for some reason you need to use a different version of a particular tool with the pipeline then you just need to identify the `process` name and override the Nextflow `container` definition for that process using the `withName` declaration.
+For example, in the dalmolingroup/euryale pipeline a tool called [Kraken2](https://github.com/dalmolingroup/euryale/blob/main/modules/nf-core/kraken2/kraken2/main.nf) is being used.
+You can override the default container used by the pipeline by creating a custom config file and passing it as a command-line argument via `-c custom.config`.
 
-1. Check the default version used by the pipeline in the module file for [Pangolin](https://github.com/nf-core/viralrecon/blob/a85d5969f9025409e3618d6c280ef15ce417df65/modules/nf-core/software/pangolin/main.nf#L14-L19)
-2. Find the latest version of the Biocontainer available on [Quay.io](https://quay.io/repository/biocontainers/pangolin?tag=latest&tab=tags)
+1. Check the default version used by the pipeline in the module file for [Kraken2](https://github.com/dalmolingroup/euryale/blob/ac25e5537dcb2428127123ea4fe106d8821bdde8/modules/nf-core/kraken2/kraken2/main.nf)
+2. Find the latest version of the Biocontainer available on [Quay.io](https://quay.io/repository/biocontainers/kraken2)
 3. Create the custom config accordingly:
 
    - For Docker:
 
      ```nextflow
      process {
-         withName: PANGOLIN {
-             container = 'quay.io/biocontainers/pangolin:3.0.5--pyhdfd78af_0'
+         withName: KRAKEN2 {
+             container = 'quay.io/biocontainers/kraken2:2.1.3--pl5321hdcf5f25_2'
          }
      }
      ```
@@ -213,8 +209,8 @@ The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementatio
 
      ```nextflow
      process {
-         withName: PANGOLIN {
-             container = 'https://depot.galaxyproject.org/singularity/pangolin:3.0.5--pyhdfd78af_0'
+         withName: KRAKEN2 {
+             container = 'https://depot.galaxyproject.org/singularity/kraken2%3A2.1.3--pl5321hdcf5f25_2'
          }
      }
      ```
@@ -224,12 +220,12 @@ The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementatio
      ```nextflow
      process {
          withName: PANGOLIN {
-             conda = 'bioconda::pangolin=3.0.5'
+             conda = 'bioconda::kraken2=2.1.3'
          }
      }
      ```
 
-> **NB:** If you wish to periodically update individual tool-specific results (e.g. Pangolin) generated by the pipeline then you must ensure to keep the `work/` directory otherwise the `-resume` ability of the pipeline will be compromised and it will restart from scratch.
+> **NB:** If you wish to periodically update individual tool-specific results (e.g. Kraken2) generated by the pipeline then you must ensure to keep the `work/` directory otherwise the `-resume` ability of the pipeline will be compromised and it will restart from scratch.
 
 ## Running in the background
 
