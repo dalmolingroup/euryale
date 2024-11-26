@@ -244,12 +244,15 @@ Caused by:
     Process `EURYALE:ALIGNMENT:DIAMOND_BLASTX  (WT_REP1)` terminated with an error exit status (137)
 
 Command executed:
-    STAR \
-        --genomeDir star \
-        --readFilesIn WT_REP1_trimmed.fq.gz  \
-        --runThreadN 2 \
-        --outFileNamePrefix WT_REP1. \
-        &lt;TRUNCATED&gt;
+    diamond \
+    blastx \
+    --threads 2 \
+    --db $DB \
+    --query test_minigut_sample2.fasta \
+    --outfmt 6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore \
+    --more-sensitive --top 3 --compress 1 \
+    --out test_minigut_sample2.txt \
+    --log
 
 Command exit status:
     137
