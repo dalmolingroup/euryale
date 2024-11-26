@@ -6,27 +6,26 @@ This document describes the output produced by the pipeline. Most of the plots a
 
 The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.
 
-<!-- TODO nf-core: Write this documentation describing your workflow's output -->
-
 ## Pipeline overview
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps (steps in **italics** don't run by default):
 
-- [Kaiju](#kaiju) - Taxonomically classify reads or contigs
+- [Kaiju](#kaiju) and/or *Kraken2* - Taxonomically classify reads or contigs
 - [Krona](#krona) - Visualize the taxonomic classification for each sample.
+- [MicroView](#microview) - Visualize the taxonomic diversity for each sample.
 - [Diamond](#diamond) - Alignment reads and contigs against a reference database (such as NCBI-nr).
 - [Annotate](#annotate) - Functional annotation of alignment matches.
-- [MEGAHIT](#megahit) - Assembled contigs.
+- [*MEGAHIT*](#megahit) - Assembled contigs.
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
-### Kaiju
+### Kaiju and Kraken2
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `taxonomy/`
-  - `${sample}.tsv`: Kaiju classification output.
+- `taxonomy/${sample}/`
+  - `${sample}.tsv`: Classification output.
   - `${sample}.txt`: Kaiju2Table TSV output.
 
 </details>
@@ -34,17 +33,32 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 [Kaiju](https://github.com/bioinformatics-centre/kaiju/) is a
 software to perform fast taxonomic classification of metagenomic sequencing reads using a protein reference database.
 
+[Kraken2](https://github.com/DerrickWood/kraken2) is the second version of the Kraken taxonomic sequence classification system.
+
 ### Krona
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `taxonomy/`
+- `taxonomy/${sample}/`
   - `${sample}.html`: Krona visualization for the sample.
 
 </details>
 
 - [Krona](https://github.com/marbl/Krona/) is a tool to interactively explore metagenomes and more from a web browser.
+
+### MicroView
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `taxonomy/microview/`
+  - `microview_report.html`: MicroView report for all samples.
+  - `microview_tables/`: Tables used for the MicroView visualizations.
+
+</details>
+
+- [MicroView](https://github.com/dalmolingroup/microview) is a reporting tool for aggregating results from taxonomic classification analyses.
 
 ### Diamond
 
