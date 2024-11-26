@@ -16,7 +16,7 @@ jobs:
       matrix:
         NXF_VER:
           - "latest-stable"
-        profile: ["docker"] # TODO , "singularity", "conda"]
+        profile: ["docker"]
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@v2
