@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Dalmolin Group" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Analysis Example - EURYALE</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Analysis Example";
+        var mkdocs_page_input_path = "analysis_example.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> EURYALE
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../usage/">Usage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../output/">Output</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Analysis Example</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#acquiring-databases-and-running-the-pipeline">Acquiring databases and running the pipeline</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exploring-the-resulting-data">Exploring the resulting data</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CITATIONS/">Citations</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../params/">Parameters</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">EURYALE</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Analysis Example</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/dalmolingroup/euryale/edit/master/docs/analysis_example.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="example-analysis-crohns-disease-microbiome-data">Example analysis - Crohn's disease microbiome data</h1>
+<p>To showcase the potential EURYALE has to expedite the analysis of microbiome data, let's
+try analysing a publicly available gut microbiome dataset (<a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA175224">PRJNA175224</a>).
+This dataset contains 7 gut microbiome samples from healthy donors and 4 from donors with Crohn's disease.</p>
+<p>Feel free to download the original dataset to a directory called <code>raw_data</code> and follow along.</p>
+<h2 id="acquiring-databases-and-running-the-pipeline">Acquiring databases and running the pipeline</h2>
+<p>Let's first download the databases and references.
+For this analysis, we'll focus on the taxonomic classification results after de-contamination.
+So, let's download the Human reference genome as well as Kaiju's database:</p>
+<pre><code class="language-bash">nextflow run dalmolingroup/euryale \
+  --download_kaiju \
+  --download_host \
+  --outdir references \
+  -entry download \
+  -profile singularity
+</code></pre>
+<p>Once that's done, let's execute the analysis on the data itself.
+Your samplesheet should look something like this:</p>
+<pre><code class="language-csv">sample,fastq_1,fastq_2
+SRR579274,raw_data/SRR579274_1.fastq.gz,raw_data/SRR579274_2.fastq.gz
+SRR579275,raw_data/SRR579275_1.fastq.gz,raw_data/SRR579275_2.fastq.gz
+SRR579276,raw_data/SRR579276_1.fastq.gz,raw_data/SRR579276_2.fastq.gz
+SRR579277,raw_data/SRR579277_1.fastq.gz,raw_data/SRR579277_2.fastq.gz
+SRR579278,raw_data/SRR579278_1.fastq.gz,raw_data/SRR579278_2.fastq.gz
+SRR579279,raw_data/SRR579279_1.fastq.gz,raw_data/SRR579279_2.fastq.gz
+SRR579280,raw_data/SRR579280_1.fastq.gz,raw_data/SRR579280_2.fastq.gz
+SRR579281,raw_data/SRR579281_1.fastq.gz,raw_data/SRR579281_2.fastq.gz
+SRR579290,raw_data/SRR579290_1.fastq.gz,raw_data/SRR579290_2.fastq.gz
+SRR579291,raw_data/SRR579291_1.fastq.gz,raw_data/SRR579291_2.fastq.gz
+SRR579292,raw_data/SRR579292_1.fastq.gz,raw_data/SRR579292_2.fastq.gz
+</code></pre>
+<p>And your command should look something like this one:</p>
+<pre><code class="language-bash">nextflow run dalmolingroup/euryale \
+          --input samplesheet.csv \
+          --outdir results \
+          --skip_alignment \
+          --skip_functional \
+          --kaiju_db references/kaiju_db_nr_2023-05-10.tgz \
+          --host_fasta references/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz \
+          -profile singularity \
+          -r &quot;v1.0.3&quot;
+</code></pre>
+<p>Check the <a href="https://dalmolingroup.github.io/euryale/params/">parameter documentation</a> for a full description
+of possible parameters.</p>
+<ul>
+<li>We're skipping the functional annotation section just to expedite the results, but feel free to include these
+  steps in your own analysis.</li>
+</ul>
+<p>Once that's all done, let's check the results we got.</p>
+<h2 id="exploring-the-resulting-data">Exploring the resulting data</h2>
+<p>First, let's open the MultiQC report in our browser and take a look.
+It should be available in <code>results/multiqc/multiqc_report.html</code>.</p>
+<p>We can first see that most reads (80%) in each sample passed
+the quality filter, thankfully:</p>
+<p><img alt="" src="../assets/fastp_filtered_reads_plot.png" /></p>
+<p>We can also see that most samples did not have their reads assigned
+to any particular taxon:</p>
+<p><img alt="" src="../assets/kaiju-topfive-plot.png" /></p>
+<p>This could be due to high host contamination, or could necessitate
+the use of another database, or something else entirely! Either way, it's something worth investigating.
+We can also see there is a strange spike of <em>Enterocloster boltae</em> in one of the samples, which also
+warrants further investigation.</p>
+<p>If we now check the MicroView results, available in <code>results/taxonomy/microview/microview_report.html</code>,
+we can see further points of interest to investigate in our data.</p>
+<p>Let's see the Beta-diversity PCoA, for example:</p>
+<p><img alt="" src="../assets/betadiv_microview.png" /></p>
+<p>The plot shows a somewhat strange division in the dataset: 4 samples stretch further in
+the PC1 than the rest. This could be due to some biological variable or an error in the data generation process.
+Either way, it's worth saving the PCoA table, available in <code>results/taxonomy/microview/microview_tables/</code> and
+crossing the sample names with the metadata of this study.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../output/" class="btn btn-neutral float-left" title="Output"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../CITATIONS/" class="btn btn-neutral float-right" title="Citations">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/dalmolingroup/euryale" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../output/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../CITATIONS/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
