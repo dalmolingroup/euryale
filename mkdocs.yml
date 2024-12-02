@@ -5,6 +5,7 @@ nav:
   - Home: README.md
   - Usage: usage.md
   - Output: output.md
+  - Analysis Example: analysis_example.md
   - Citations: CITATIONS.md
   - Reference:
       - Parameters: params.md
