@@ -40,13 +40,13 @@ jobs:
       matrix:
         profile: ["docker", "singularity"]
         NXF_VER:
-          - "latest-everything"
+          - "23.10.0"
     steps:
       - name: Check out pipeline code
-        uses: actions/checkout@v2
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
 
       - name: Install Nextflow
-        uses: nf-core/setup-nextflow@v1
+        uses: nf-core/setup-nextflow@v2
         with:
           version: "${{ matrix.NXF_VER }}"
 

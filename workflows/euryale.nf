@@ -109,15 +109,17 @@ workflow EURYALE {
         ch_multiqc_files = ch_multiqc_files.mix(PREPROCESS.out.multiqc_files.collect())
     }
 
-    if (ch_host_reference || ch_bowtie2_db) {
-        HOST_REMOVAL (
-            clean_reads,
-            ch_host_reference,
-            ch_bowtie2_db
-        )
+    if (!params.skip_host_removal) {
+        if (ch_host_reference || ch_bowtie2_db) {
+            HOST_REMOVAL (
+                    clean_reads,
+                    ch_host_reference,
+                    ch_bowtie2_db
+                    )
 
-        HOST_REMOVAL.out.unaligned_reads
-            .set { clean_reads }
+                HOST_REMOVAL.out.unaligned_reads
+                .set { clean_reads }
+        }
     }
     if (params.assembly_based) {
         ASSEMBLY (
