@@ -93,9 +93,9 @@ Reference genome related files and options required for the workflow.
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-----------|-----------|-----------|-----------|-----------|
-| `download_functional` | Whether to dowload functional references | `boolean` | True |  |  |
-| `download_kaiju` | Whether to dowload the Kaiju reference db | `boolean` | True |  |  |
-| `download_kraken` | Whether to dowload the Kraken2 reference db | `boolean` |  |  |  |
+| `download_functional` | Whether to download functional references | `boolean` | True |  |  |
+| `download_kaiju` | Whether to download the Kaiju reference db | `boolean` | True |  |  |
+| `download_kraken` | Whether to download the Kraken2 reference db | `boolean` |  |  |  |
 | `download_host` | Whether to download the host reference genome | `boolean` |  |  |  |
 | `functional_db` | Functional reference URL (download entry) | `string` | https://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nr.gz |  |  |
 | `functional_dictionary` | Functional dictionary URL (download entry) | `string` | https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/idmapping.dat.gz |  |  |
