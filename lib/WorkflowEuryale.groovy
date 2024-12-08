@@ -39,7 +39,7 @@ class WorkflowEuryale {
     }
 
     public static String methodsDescriptionText(run_workflow, mqc_methods_yaml) {
-        // Convert  to a named map so can be used as with familar NXF ${workflow} variable syntax in the MultiQC YML file
+        // Convert to a named map so that it can be used with a familiar NXF ${workflow} variable syntax in the MultiQC YML file
         def meta = [:]
         meta.workflow = run_workflow.toMap()
         meta["manifest_map"] = run_workflow.manifest.toMap()

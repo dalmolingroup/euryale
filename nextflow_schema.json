@@ -242,16 +242,16 @@
                 "download_functional": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Whether to dowload functional references"
+                    "description": "Whether to download functional references"
                 },
                 "download_kaiju": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Whether to dowload the Kaiju reference db"
+                    "description": "Whether to download the Kaiju reference db"
                 },
                 "download_kraken": {
                     "type": "boolean",
-                    "description": "Whether to dowload the Kraken2 reference db"
+                    "description": "Whether to download the Kraken2 reference db"
                 },
                 "download_host": {
                     "type": "boolean",
