@@ -34,7 +34,7 @@ workflow TAXONOMY {
         KAIJU_KAIJU2TABLE (
             kaiju_out,
             kaiju_db_files,
-            "species"
+            params.kaiju_taxon_rank
         )
 
         tax_report = tax_report.mix(KAIJU_KAIJU2TABLE.out.summary)
